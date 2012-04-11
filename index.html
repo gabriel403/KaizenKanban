@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Kaizen Kanban</title>
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
+        <style type="text/css">
+            @import url("http://downloads.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2/dojo/resources/dojo.css");
+            @import url("http://downloads.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2/dojo/resources/dnd.css");
+            @import url("dnd.css");
+        </style>
+        <script type="text/javascript">
+            function removeSource(show, source, nodes){
+                dojo.style(source[0], 'visibility', 'hidden');
+            }
+            function displaySource(show, source, nodes){
+                dojo.style(source[0], 'visibility', 'visible');
+            }
+
+            require([ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!" ],
+                function(domClass, Source){
+                    var catalog = new Source("catalogNode",
+                        { accept: [ "inStock", "outOfStock" ] });
+                    catalog.insertNodes(false, [
+                        { data: "Wrist watch",        type: [ "inStock" ] },
+                        { data: "Life jacket",        type: [ "inStock" ] },
+                        { data: "Toy bulldozer",      type: [ "inStock" ] },
+                        { data: "Vintage microphone", type: [ "outOfStock" ] },
+                        { data: "TIE fighter",        type: [ "outOfStock" ] },
+                        { data: "Apples",             type: [ "inStock" ] },
+                        { data: "Bananas",            type: [ "inStock" ] },
+                        { data: "Tomatoes",           type: [ "outOfStock" ] },
+                        { data: "Bread",              type: [ "inStock" ] }
+                    ]);
+
+                    catalog.forInItems(function(item, id, map){
+                        domClass.add(id, item.type[0]);
+                    });
+                 
+                    var cart = new Source("cartNode", { accept: [ "inStock" ] });
+                    var wishlist = new Source("wishlistNode", { accept: [ "inStock", "outOfStock" ] });
+                    dojo.subscribe("/dnd/start", removeSource);
+                    dojo.subscribe("/dnd/drop", displaySource);
+                    // dojo.subscribe("/dnd/cancel, /dnd/drop", displaySource);
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="outerContainer">
+            <div class="wishlistContainer column">
+                <h2>Wishlist</h2>
+                <div id="wishlistNode" class="container">
+                </div>
+            </div>
+            <div class="cartContainer column">
+                <h2>Cart</h2>
+                <div id="cartNode" class="container">
+                </div>
+            </div>
+            <div class="catalogContainer column">
+                <h2>Catalog</h2>
+                <div id="catalogNode" class="container">
+                </div>
+            </div>
+            <br class='clear_both' />
+        </div>
+    </body>
+</html>
