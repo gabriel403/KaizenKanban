@@ -1,24 +1,56 @@
-var fs          = require('fs')
-, url           = require('url')
-, transfertypes = require('./transfertypes.js');
+var fs          = require('fs'),
+url             = require('url'),
+transferTypes   = require('./transfertypes.js');
 
-self    = module.exports  = {
-    route: function(req, res){
-        var path = url.parse(req.url).pathname;
-        fs.readFile(__dirname + path, function(err, data){
-            if (err) {
-                return self.send404(res);
-            }
+exports.extTypes = {
+    "/" : "/index.html"
+}
 
-            res.writeHead(200, {'Content-Type': transfertypes.getContentType(transfertypes.getExt(path))})
-            res.write(data, 'utf8');
-            res.end();
-        });
-    },
-    send404: function(res){
-        res.writeHead(404);
-        res.write('404');
-        res.end();
-        return this;
+exports.data = "";
+exports.httpcode = 200;
+exports.transferType = "text/html";
+
+exports.route = function(req, res){
+
+    exports.data = "";
+    exports.httpcode = 200;
+    exports.transferType = "text/html";
+
+    var path, sdata;
+    path = url.parse(req.url).pathname;
+    path = exports.specialCaseCheck(path);
+    fs.readFile(__dirname + path, function(err, data){
+        if (err) {
+            exports.send404();
+        } else {
+            exports.data = data;
+            exports.transferType = transferTypes.getContentType(transferTypes.getExt(path));
+        }
+
+        exports.sendResponse(res);
+    });
+
+}
+
+exports.sendResponse = function(res){
+
+    res.writeHead(exports.httpcode, {'Content-Type': exports.transferType})
+    res.write(exports.data, 'utf8');
+    res.end();
+    return exports;
+}
+
+exports.send404 = function(){
+    exports.httpcode = 404;
+    exports.data = '404';
+    return exports;
+}
+
+exports.specialCaseCheck =  function(path) {
+    if ( path in exports.extTypes ) {
+        return exports.extTypes[path];
+    } else {
+        return path;
     }
 }
+

@@ -1,6 +1,6 @@
-var http    = require('http')
-, router        = require('./router.js')
-, server;
+var http    = require('http'),
+router      = require('./router.js'),
+server;
 
 var self = module.exports = {
     createServer: function() {

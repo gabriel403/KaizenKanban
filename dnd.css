@@ -1,15 +1,3 @@
-/* Copyright (c) 2008 SitePen Inc. All rights reserved. */
-
-/* based on dojo svn trunk/dojo/tests/dnd/dndDefault.css */
-
-/*
-
-    there are basically all the classes you can set
-    for the various dojo.dnd states and elements in
-    their simplest form. hacking welcome.
-
-*/
-
 .dojoDndItem, .dojoDndItemAnchor {
     padding:3px;
     border: 1px black solid;
