@@ -21,7 +21,7 @@ exports.route = function(req, res){
     path = exports.specialCaseCheck(path);
     fs.readFile(__dirname + path, function(err, data){
         if (err) {
-            exports.send404();
+            exports.prepareNotFound();
         } else {
             exports.data = data;
             exports.transferType = transferTypes.getContentType(transferTypes.getExt(path));
@@ -40,7 +40,7 @@ exports.sendResponse = function(res){
     return exports;
 }
 
-exports.send404 = function(){
+exports.prepareNotFound = function(){
     exports.httpcode = 404;
     exports.data = '404';
     return exports;
