@@ -33,7 +33,8 @@
                 dojo.style(source[0], 'visibility', 'visible');
             }
 
-            require([ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "dnd/dndCreator" ],
+            require(
+                [ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "dnd/dndCreator" ],
                 function(domClass, Source, domReady, dndCreator){
                     var catalogData = [
                         {name: "some name", description: "lol a desc", quantity: 0},
@@ -47,12 +48,11 @@
                         {name: "some name 8", description: "lol a desc 8", quantity: 0}
                     ]
                     var catalog = dndCreator.buildCatalog("catalogNode", catalogData);
-                    // var cart = new Source("cartNode", { accept: [ "inStock" ] });
-                    // var wishlist = new Source("wishlistNode", { accept: [ "inStock", "outOfStock" ] });
+                    var cart = new Source("cartNode", { accept: [ "inStock" ] });
+                    var wishlist = new Source("wishlistNode", { accept: [ "inStock", "outOfStock" ] });
                     // dojo.subscribe("/dnd/start", removeSource);
                     // dojo.subscribe("/dnd/drop", displaySource);
                     // dojo.subscribe("/dnd/cancel, /dnd/drop", displaySource);
-
             });
         </script>
     </head>
