@@ -1,7 +1,7 @@
 .dojoDndItem, .dojoDndItemAnchor {
     padding:3px;
     border: 1px black solid;
-    margin: 3px;
+    margin-bottom: 3px;
     height: 100px;
 }
 
@@ -55,19 +55,21 @@
     clear: both;
 }
 
-.column {
-    width: 250px;
-    float: left;
-}
-
 .container {
     min-height: 300px;
+
 }
 
 .outerContainer {
-    display: inline-block;
+    width: 100%;
 }
 
 body {
     width: 100%;
+}
+
+ol, ul {
+    list-style: none;
+    padding: 0px;
+    border: 1px black solid;
 }

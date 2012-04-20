@@ -1,16 +1,16 @@
 define(
-    [ "dojo/string", "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source", "dojo/text!/dnd/kanbanCard.html" ],
+    [ "dojo/string", "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source", "dojo/text!/kk/kanbanCard.html" ],
     function(stringUtil, domConstruct, domClass, Source, template){
 
         // create the DOM representation for the given item
-        function catalogNodeCreator(item){
+        function cardCreator(item){
             var node = domConstruct.toDom(
                 stringUtil.substitute(
                     template,
                     {
                         name: item.name,
                         quantity: item.quantity,
-                        description: "<br><span>" + item.description + "</span>"
+                        description: item.description
                     }
                 )
             ),
@@ -18,8 +18,12 @@ define(
             return { node: node, data: item, type: type };
         }
 
+        function workflowStepCreator(item){
+            
+        }
+
         // creates a dojo/dnd/Source from the data provided
-        function buildCatalog(node, data, selfAccept){
+        function buildCardList(node, data, selfAccept){
 
             // create the Source
             var dndObj = new Source(node, {
@@ -31,7 +35,7 @@ define(
                 selfAccept: selfAccept === undefined ? true : selfAccept,
 
                 // use catalogNodeCreator as our creator function for inserting new nodes
-                creator: catalogNodeCreator
+                creator: cardCreator
             });
 
             // insert new nodes to the Source; the first argument indicates that they will not be highlighted (selected)
@@ -48,7 +52,7 @@ define(
 
         // expose our API
         return {
-            buildCatalog: buildCatalog
+            buildCardList: buildCardList
         };
     }
 );

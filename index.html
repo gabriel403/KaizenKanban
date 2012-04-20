@@ -5,26 +5,15 @@
         <title>Kaizen Kanban</title>
 
         <style type="text/css">
+            @import url("reset.css");
             @import url("http://downloads.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2/dojo/resources/dojo.css");
             @import url("http://downloads.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2/dojo/resources/dnd.css");
             @import url("dnd.css");
         </style>
         
-        <script type="text/javascript">
-            var dojoConfig = {
-                async: true,
-                packages: [
-                    {
-                        name: "dnd",
-                        location: "/dnd"
-                    }
-                ]
-            };
-        </script>
+        <script data-dojo-config="async: true, packages: [{ name: 'kk', location: '/kk' }]" type="text/javascript" 
+            src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
-
-        <!--<script type="text/javascript" charset="utf-8" src="/dnd/dndCreator.js"></script>-->
         <script type="text/javascript">
             function removeSource(show, source, nodes){
                 dojo.style(source[0], 'visibility', 'hidden');
@@ -34,20 +23,20 @@
             }
 
             require(
-                [ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "dnd/dndCreator" ],
+                [ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "kk/dndCreator" ],
                 function(domClass, Source, domReady, dndCreator){
                     var catalogData = [
-                        {name: "some name", description: "lol a desc", quantity: 0},
-                        {name: "some name 1", description: "lol a desc 1", quantity: 0},
+                        {name: "some name 0", description: "lol a desc 0", quantity: 0},
+                        {name: "some name 1", description: "lol a desc 1", quantity: 2},
                         {name: "some name 2", description: "lol a desc 2", quantity: 0},
                         {name: "some name 3", description: "lol a desc 3", quantity: 0},
-                        {name: "some name 4", description: "lol a desc 4", quantity: 0},
+                        {name: "some name 4", description: "lol a desc 4", quantity: 5},
                         {name: "some name 5", description: "lol a desc 5", quantity: 0},
-                        {name: "some name 6", description: "lol a desc 6", quantity: 0},
-                        {name: "some name 7", description: "lol a desc 7", quantity: 0},
+                        {name: "some name 6", description: "lol a desc 6", quantity: 01},
+                        {name: "some name 7", description: "lol a desc 7", quantity: 000},
                         {name: "some name 8", description: "lol a desc 8", quantity: 0}
                     ]
-                    var catalog = dndCreator.buildCatalog("catalogNode", catalogData);
+                    var catalog = dndCreator.buildCardList("catalogNode", catalogData);
                     var cart = new Source("cartNode", { accept: [ "inStock" ] });
                     var wishlist = new Source("wishlistNode", { accept: [ "inStock", "outOfStock" ] });
                     // dojo.subscribe("/dnd/start", removeSource);
@@ -57,23 +46,24 @@
         </script>
     </head>
     <body>
-        <div class="outerContainer">
-            <div class="wishlistContainer column">
-                <h2>Wishlist</h2>
-                <div id="wishlistNode" class="container">
-                </div>
-            </div>
-            <div class="cartContainer column">
-                <h2>Cart</h2>
-                <div id="cartNode" class="container">
-                </div>
-            </div>
-            <div class="catalogContainer column">
-                <h2>Catalog</h2>
-                <div id="catalogNode" class="container">
-                </div>
-            </div>
-            <br class='clear_both' />
-        </div>
+        <table class="outerContainer">
+            <tr>
+                <td class="wishlistContainer column">
+                    <h2>Wishlist</h2>
+                    <ul id="wishlistNode" class="container">
+                    </ul>
+                </td>
+                <td class="cartContainer column">
+                    <h2>Cart</h2>
+                    <ul id="cartNode" class="container">
+                    </ul>
+                </td>
+                <td class="catalogContainer column">
+                    <h2>Catalog</h2>
+                    <ul id="catalogNode" class="container">
+                    </ul>
+                </td>
+            </tr>
+        </table>
     </body>
 </html>
