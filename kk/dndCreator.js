@@ -1,12 +1,15 @@
 define(
-    [ "dojo/string", "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source", "dojo/text!/kk/kanbanCard.html", "dojo/text!/kk/kanbanColumn.html" ],
-    function(stringUtil, domConstruct, domClass, Source, cardTemplate, columnTemplate){
+    [ "dojo", "dojo/dom-style", "dojo/string", "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source", "dojo/text!/kk/kanbanCard.html", "dojo/text!/kk/kanbanColumn.html" ],
+    function(dojo, domStyle, stringUtil, domConstruct, domClass, Source, cardTemplate, columnTemplate){
 
         function removeSource(show, source, nodes){
-            dojo.style(source[0], 'visibility', 'hidden');
+            domStyle.set(source[0], 'visibility', 'hidden');
+            domStyle.set(dojo.query('.dojoDndAvatar')[0], 'width', domStyle.get(dojo.query('.dojoDndItemAnchor')[0], 'width')+'px');
+            domStyle.set(dojo.query('.dojoDndAvatar')[0], 'height', domStyle.get(dojo.query('.dojoDndItemAnchor')[0], 'height')+'px');
+
         }
         function displaySource(show, source, nodes){
-            dojo.style(source[0], 'visibility', 'visible');
+            domStyle.set(source[0], 'visibility', 'visible');
         }
 
         function addListeners(){
@@ -22,9 +25,9 @@ define(
                 stringUtil.substitute(
                     cardTemplate,
                     {
-                        name:           item.name,
-                        quantity:       item.quantity,
-                        description:    item.description
+                        name:           item.name[0],
+                        quantity:       item.quantity[0],
+                        description:    item.description[0]
                     }
                 )
             );

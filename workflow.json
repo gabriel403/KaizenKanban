@@ -1,0 +1,8 @@
+{
+    "identifier": "title",
+    "items": [
+        {"title": "Wishlist", "id": "wishlist"},
+        {"title": "Cart",     "id": "cart"},
+        {"title": "Catalog",  "id": "catalog"}
+    ]
+}

@@ -16,35 +16,44 @@
 
         <script type="text/javascript">
             require(
-                [ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "kk/dndCreator" ],
-                function(domClass, Source, domReady, dndCreator){
-                    var catalogData = [
-                        {name: "some name 0", description: "lol a desc 0", quantity: 0},
-                        {name: "some name 1", description: "lol a desc 1", quantity: 2},
-                        {name: "some name 2", description: "lol a desc 2", quantity: 0},
-                        {name: "some name 3", description: "lol a desc 3", quantity: 0},
-                        {name: "some name 4", description: "lol a desc 4", quantity: 5},
-                        {name: "some name 5", description: "lol a desc 5", quantity: 0},
-                        {name: "some name 6", description: "lol a desc 6", quantity: 01},
-                        {name: "some name 7", description: "lol a desc 7", quantity: 000},
-                        {name: "some name 8", description: "lol a desc 8", quantity: 0}
-                    ];
+                [ "dojo/data/ItemFileWriteStore", "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "kk/dndCreator" ],
+                function(jsonStore, domClass, Source, domReady, dndCreator){
 
-                    var workflowData = [
-                        {title: "Wishlist", id: "wishlist"},
-                        {title: "Cart",     id: "cart"},
-                        {title: "Catalog",  id: "catalog"}
-                    ];
+                    var store = new jsonStore({url: "workflow.json"});
+                    store.fetch({onBegin: onWorkflowBegin, onItem: gotWorkflow, onError: fetchFailed});
 
                     var workflowSteps = [];
+                    var workflowLength = 0;
 
-                    for ( var itemId in workflowData ) {
-                        workflowSteps.push(dndCreator.workflowStepCreator(workflowData[itemId]));
+                    function onStoryBegin(size, request){
+                        // console.log(size);
                     }
 
-                    dndCreator.buildCardList(workflowData[0].id+"Node", catalogData);
-                    dndCreator.buildCardList(workflowData[1].id+"Node", []);
-                    dndCreator.buildCardList(workflowData[2].id+"Node", []);
+                    function onWorkflowBegin(size, request){
+                        // console.log(size);
+                        workflowLength = size-1;
+                    }
+
+                    function gotStory(item, request){
+                        // console.log(item);
+                        workflowSteps[0].insertNodes(false, [item]);
+                    }
+
+                    function gotWorkflow(item, request){
+                        // console.log(item);
+                        dndCreator.workflowStepCreator(item);
+                        workflowSteps.push(dndCreator.buildCardList(item.id+"Node", []));
+
+                        if ( item._0 >= workflowLength ) {
+                            var store = new jsonStore({url: "stories.json"});
+                            store.fetch({onBegin: onStoryBegin, onItem: gotStory, onError: fetchFailed});
+                        }
+                    }
+
+                    function fetchFailed(error, request){
+                        console.error(error);
+                    }
+
                     dndCreator.addListeners();
             });
         </script>
