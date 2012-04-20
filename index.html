@@ -10,18 +10,11 @@
             @import url("http://downloads.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2/dojo/resources/dnd.css");
             @import url("dnd.css");
         </style>
-        
+
         <script data-dojo-config="async: true, packages: [{ name: 'kk', location: '/kk' }]" type="text/javascript" 
             src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
 
         <script type="text/javascript">
-            function removeSource(show, source, nodes){
-                dojo.style(source[0], 'visibility', 'hidden');
-            }
-            function displaySource(show, source, nodes){
-                dojo.style(source[0], 'visibility', 'visible');
-            }
-
             require(
                 [ "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "kk/dndCreator" ],
                 function(domClass, Source, domReady, dndCreator){
@@ -35,34 +28,30 @@
                         {name: "some name 6", description: "lol a desc 6", quantity: 01},
                         {name: "some name 7", description: "lol a desc 7", quantity: 000},
                         {name: "some name 8", description: "lol a desc 8", quantity: 0}
-                    ]
-                    var catalog = dndCreator.buildCardList("catalogNode", catalogData);
-                    var cart = new Source("cartNode", { accept: [ "inStock" ] });
-                    var wishlist = new Source("wishlistNode", { accept: [ "inStock", "outOfStock" ] });
-                    // dojo.subscribe("/dnd/start", removeSource);
-                    // dojo.subscribe("/dnd/drop", displaySource);
-                    // dojo.subscribe("/dnd/cancel, /dnd/drop", displaySource);
+                    ];
+
+                    var workflowData = [
+                        {title: "Wishlist", id: "wishlist"},
+                        {title: "Cart",     id: "cart"},
+                        {title: "Catalog",  id: "catalog"}
+                    ];
+
+                    var workflowSteps = [];
+
+                    for ( var itemId in workflowData ) {
+                        workflowSteps.push(dndCreator.workflowStepCreator(workflowData[itemId]));
+                    }
+
+                    dndCreator.buildCardList(workflowData[0].id+"Node", catalogData);
+                    dndCreator.buildCardList(workflowData[1].id+"Node", []);
+                    dndCreator.buildCardList(workflowData[2].id+"Node", []);
+                    dndCreator.addListeners();
             });
         </script>
     </head>
     <body>
         <table class="outerContainer">
-            <tr>
-                <td class="wishlistContainer column">
-                    <h2>Wishlist</h2>
-                    <ul id="wishlistNode" class="container">
-                    </ul>
-                </td>
-                <td class="cartContainer column">
-                    <h2>Cart</h2>
-                    <ul id="cartNode" class="container">
-                    </ul>
-                </td>
-                <td class="catalogContainer column">
-                    <h2>Catalog</h2>
-                    <ul id="catalogNode" class="container">
-                    </ul>
-                </td>
+            <tr id="innerContainer">
             </tr>
         </table>
     </body>

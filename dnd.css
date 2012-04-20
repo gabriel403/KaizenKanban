@@ -65,11 +65,14 @@
 }
 
 body {
-    width: 100%;
+    padding: 15px 15px 15px 0px;
 }
 
 ol, ul {
     list-style: none;
-    padding: 0px;
-    border: 1px black solid;
+}
+
+.column {
+    width: 1%;
+    padding-left: 15px;
 }
