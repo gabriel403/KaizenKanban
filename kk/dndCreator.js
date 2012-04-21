@@ -1,21 +1,42 @@
-define(
-    [ "dojo", "dojo/dom-style", "dojo/string", "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source", "dojo/text!/kk/kanbanCard.html", "dojo/text!/kk/kanbanColumn.html" ],
-    function(dojo, domStyle, stringUtil, domConstruct, domClass, Source, cardTemplate, columnTemplate){
+define([ "dojo/_base/connect", "dojo", "dojo/query", "dojo/dom-style", "dojo/string",
+     "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source",
+     "dojo/text!/kk/kanbanCard.html", "dojo/text!/kk/kanbanColumn.html" ],
+    function(connect, dojo, query, domStyle, stringUtil,
+     domConstruct, domClass, Source,
+     cardTemplate, columnTemplate){
 
-        function removeSource(show, source, nodes){
+        var movingNode = null;
+
+        function moveStart(show, source, nodes){
+            movingNode = source[0];
             domStyle.set(source[0], 'visibility', 'hidden');
-            domStyle.set(dojo.query('.dojoDndAvatar')[0], 'width', domStyle.get(dojo.query('.dojoDndItemAnchor')[0], 'width')+'px');
-            domStyle.set(dojo.query('.dojoDndAvatar')[0], 'height', domStyle.get(dojo.query('.dojoDndItemAnchor')[0], 'height')+'px');
+            domStyle.set(query('.dojoDndAvatar')[0], 'width', domStyle.get(query('.dojoDndItemAnchor')[0], 'width')+'px');
+            domStyle.set(query('.dojoDndAvatar')[0], 'height', domStyle.get(query('.dojoDndItemAnchor')[0], 'height')+'px');
 
         }
-        function displaySource(show, source, nodes){
-            domStyle.set(source[0], 'visibility', 'visible');
+        function moveStop(show, source, nodes){
+            movingNode = null;
+            query('.dojoDndItemAnchor').style('visibility', 'visible');
+        }
+
+        function moveOver(e){
+            if ( null == movingNode ) {
+                return;
+            }
+
+            var itemOver = e.currentTarget;
+            if ( null == itemOver ) {
+                return;
+            }
+
+            var position = domClass.contains(itemOver, 'dojoDndItemBefore')?'before':'after';
+            dojo.place(movingNode, itemOver, position);
         }
 
         function addListeners(){
-            dojo.subscribe("/dnd/start", removeSource);
-            dojo.subscribe("/dnd/drop", displaySource);
-            // dojo.subscribe("/dnd/cancel, /dnd/drop", displaySource);
+            connect.subscribe("/dnd/start", moveStart);
+            dojo.query('.dojoDndItem').connect('onmouseenter', this, moveOver);
+            connect.subscribe("/dnd/cancel, /dnd/drop", moveStop);
 
         }
 
@@ -55,14 +76,15 @@ define(
             // create the Source
             var dndObj = new Source(node, {
                 // ensure that only move operations ever occur from this source
-                copyOnly:   false,
+                copyOnly:       false,
 
                 // define whether or not this source will accept drops from itself, based on the value passed into
                 // buildCatalog; defaults to true, since this is the default that dojo/dnd uses
-                selfAccept: selfAccept === undefined ? true : selfAccept,
+                selfAccept:     selfAccept === undefined ? true : selfAccept,
 
                 // use catalogNodeCreator as our creator function for inserting new nodes
-                creator:    cardCreator
+                creator:        cardCreator,
+                withHandles:    true
             });
 
             // insert new nodes to the Source; the first argument indicates that they will not be highlighted (selected)
@@ -76,7 +98,8 @@ define(
         return {
             buildCardList:          buildCardList,
             workflowStepCreator:    workflowStepCreator,
-            addListeners:           addListeners
+            addListeners:           addListeners,
+            moveOver:               moveOver
         };
     }
 );

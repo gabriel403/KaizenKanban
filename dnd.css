@@ -14,10 +14,6 @@
     background-color: #5bbdea; color: #444;
 }
 
-.dojoDndItemAnchor {
-    background-color: #5bbdea; color: black;
-}
-
 .dojoDndItemOver .dojoDndItemSelected {
     background-color: #ededed;
 }
@@ -56,8 +52,12 @@
 }
 
 .container {
-    min-height: 300px;
+    min-height: 800px;
 
+}
+
+.dojoDndHandle {
+    border-bottom: 1px black solid;
 }
 
 .outerContainer {

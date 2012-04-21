@@ -24,9 +24,11 @@
 
                     var workflowSteps = [];
                     var workflowLength = 0;
+                    var storiesLength = 0;
 
                     function onStoryBegin(size, request){
                         // console.log(size);
+                        storiesLength = size-1;
                     }
 
                     function onWorkflowBegin(size, request){
@@ -37,6 +39,10 @@
                     function gotStory(item, request){
                         // console.log(item);
                         workflowSteps[0].insertNodes(false, [item]);
+
+                        if ( item._0 >= storiesLength ) {
+                            dndCreator.addListeners();
+                        }
                     }
 
                     function gotWorkflow(item, request){
@@ -54,7 +60,6 @@
                         console.error(error);
                     }
 
-                    dndCreator.addListeners();
             });
         </script>
     </head>
