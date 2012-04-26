@@ -1,9 +1,9 @@
-define([ "dojo/_base/connect", "dojo", "dojo/query", "dojo/dom-style", "dojo/string",
+define([ "dojo/on", "dojo", "dojo/query", "dojo/dom-style", "dojo/string",
      "dojo/dom-construct", "dojo/dom-class", "dojo/dnd/Source",
-     "dojo/text!/kk/kanbanCard.html", "dojo/text!/kk/kanbanColumn.html" ],
-    function(connect, dojo, query, domStyle, stringUtil,
+     "dojo/text!/kk/kanbanCard.html", "dojo/text!/kk/kanbanColumn.html", "dojo/aspect", "dojo/topic" ],
+    function(on, dojo, query, domStyle, stringUtil,
      domConstruct, domClass, Source,
-     cardTemplate, columnTemplate){
+     cardTemplate, columnTemplate, aspect, topic){
 
         var movingNode = null;
 
@@ -14,7 +14,8 @@ define([ "dojo/_base/connect", "dojo", "dojo/query", "dojo/dom-style", "dojo/str
             domStyle.set(query('.dojoDndAvatar')[0], 'height', domStyle.get(query('.dojoDndItemAnchor')[0], 'height')+'px');
 
         }
-        function moveStop(show, source, nodes){
+
+        function moveStop(source, nodes, copy){
             movingNode = null;
             query('.dojoDndItemAnchor').style('visibility', 'visible');
         }
@@ -24,7 +25,7 @@ define([ "dojo/_base/connect", "dojo", "dojo/query", "dojo/dom-style", "dojo/str
                 return;
             }
 
-            var itemOver = e.currentTarget;
+            var itemOver = this.current;
             if ( null == itemOver ) {
                 return;
             }
@@ -33,11 +34,11 @@ define([ "dojo/_base/connect", "dojo", "dojo/query", "dojo/dom-style", "dojo/str
             dojo.place(movingNode, itemOver, position);
         }
 
-        function addListeners(){
-            connect.subscribe("/dnd/start", moveStart);
-            dojo.query('.dojoDndItem').connect('onmouseenter', this, moveOver);
-            connect.subscribe("/dnd/cancel, /dnd/drop", moveStop);
-
+        function addListeners(source){
+            topic.subscribe("/dnd/start", moveStart);
+            aspect.after(source, '_markTargetAnchor', moveOver, true);
+            topic.subscribe("/dnd/drop", moveStop);
+            topic.subscribe("/dnd/cancel", moveStop);
         }
 
         // create the DOM representation for the given item
@@ -90,6 +91,8 @@ define([ "dojo/_base/connect", "dojo", "dojo/query", "dojo/dom-style", "dojo/str
             // insert new nodes to the Source; the first argument indicates that they will not be highlighted (selected)
             // when inserted
             dndObj.insertNodes(false, data);
+
+            this.addListeners(dndObj);
 
             return dndObj;
         }
