@@ -9,6 +9,7 @@ define([ "dojo/on", "dojo", "dojo/query", "dojo/dom-style", "dojo/string",
 
         function moveStart(show, source, nodes){
             movingNode = source[0];
+            domStyle.set(source[0], 'display', 'none');
             domStyle.set(source[0], 'visibility', 'hidden');
             domStyle.set(query('.dojoDndAvatar')[0], 'width', domStyle.get(query('.dojoDndItemAnchor')[0], 'width')+'px');
             domStyle.set(query('.dojoDndAvatar')[0], 'height', domStyle.get(query('.dojoDndItemAnchor')[0], 'height')+'px');
@@ -31,14 +32,28 @@ define([ "dojo/on", "dojo", "dojo/query", "dojo/dom-style", "dojo/string",
             }
 
             var position = domClass.contains(itemOver, 'dojoDndItemBefore')?'before':'after';
+            domStyle.set(movingNode, 'display', 'block');
             dojo.place(movingNode, itemOver, position);
         }
 
+        function moveOut(e){
+            if ( null == movingNode ) {
+                return;
+            }
+            domStyle.set(movingNode, 'display', 'none');
+        }
+
         function addListeners(source){
+            if ( null == source )
+            {
+                return;
+            }
             topic.subscribe("/dnd/start", moveStart);
             aspect.after(source, '_markTargetAnchor', moveOver, true);
+            aspect.after(source, 'onDraggingOut', moveOut, true);
             topic.subscribe("/dnd/drop", moveStop);
             topic.subscribe("/dnd/cancel", moveStop);
+            //topic.subscribe("/dnd/source/over", moveStop);
         }
 
         // create the DOM representation for the given item
