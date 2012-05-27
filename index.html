@@ -17,54 +17,7 @@
         <!--<script data-dojo-config="async: true, packages: [{ name: 'kk', location: '/kk' }]" type="text/javascript" 
             src="/dojo-release-1.7.2-src/dojo/dojo.js"></script>-->
 
-        <script type="text/javascript">
-            require(
-                [ "dojo/data/ItemFileWriteStore", "dojo/dom-class", "dojo/dnd/Source", "dojo/domReady!", "kk/dndCreator" ],
-                function(jsonStore, domClass, Source, domReady, dndCreator){
-
-                    var store = new jsonStore({url: "workflow.json"});
-                    store.fetch({onBegin: onWorkflowBegin, onItem: gotWorkflow, onError: fetchFailed});
-
-                    var workflowSteps = [];
-                    var workflowLength = 0;
-                    var storiesLength = 0;
-
-                    function onStoryBegin(size, request){
-                        // console.log(size);
-                        storiesLength = size-1;
-                    }
-
-                    function onWorkflowBegin(size, request){
-                        // console.log(size);
-                        workflowLength = size-1;
-                    }
-
-                    function gotStory(item, request){
-                        // console.log(item);
-                        workflowSteps[0].insertNodes(false, [item]);
-
-                        if ( item._0 >= storiesLength ) {
-                            dndCreator.addListeners();
-                        }
-                    }
-
-                    function gotWorkflow(item, request){
-                        // console.log(item);
-                        dndCreator.workflowStepCreator(item);
-                        workflowSteps.push(dndCreator.buildCardList(item.id+"Node", []));
-
-                        if ( item._0 >= workflowLength ) {
-                            var store = new jsonStore({url: "stories.json"});
-                            store.fetch({onBegin: onStoryBegin, onItem: gotStory, onError: fetchFailed});
-                        }
-                    }
-
-                    function fetchFailed(error, request){
-                        console.error(error);
-                    }
-
-            });
-        </script>
+        <script type="text/javascript" src="/launcher.js"></script>
     </head>
     <body>
         <table class="outerContainer">

@@ -12,13 +12,29 @@ exports.transferType = "text/html";
 
 exports.route = function(req, res){
 
+    switch(req.method)
+    {
+        case 'GET':
+            this.GET(req, res);
+            break;
+        case 'POST':
+            break;
+    }
+
+}
+
+exports.GET = function(req, res) {
+
     exports.data = "";
     exports.httpcode = 200;
     exports.transferType = "text/html";
 
-    var path, sdata;
-    path = url.parse(req.url).pathname;
-    path = exports.specialCaseCheck(path);
+
+
+    var path, sdata, parsedUrl;
+    parsedUrl = url.parse(req.url);
+    path = exports.specialCaseCheck(parsedUrl.pathname);
+
     fs.readFile(__dirname + path, function(err, data){
         if (err) {
             exports.prepareNotFound();
@@ -29,7 +45,6 @@ exports.route = function(req, res){
 
         exports.sendResponse(res);
     });
-
 }
 
 exports.sendResponse = function(res){

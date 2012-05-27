@@ -1,8 +1,8 @@
 {
     "identifier": "title",
     "items": [
-        {"title": "Wishlist", "id": "wishlist"},
-        {"title": "Cart",     "id": "cart"},
-        {"title": "Catalog",  "id": "catalog"}
+        {"title": "RFC",                    "id": "rfc"},
+        {"title": "Awaiting Development",   "id": "awdev"},
+        {"title": "In Development",         "id": "indev"}
     ]
 }
