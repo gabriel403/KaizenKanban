@@ -1,8 +1,8 @@
-define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect",
+define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "dojo/dom-attr",
      "dojo/topic", "dojo/dom-construct", "dojo/dom-class", "dojo/_base/lang", "dojo/_base/array",
      "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
      "kk/views/widgets/kanbanBoard/kanbanColumn", "kk/views/widgets/kanbanBoard/kanbanCard", "dojo/text!./kanbanBoard.html" ],
-    function(declare, query, domStyle, aspect,
+    function(declare, query, domStyle, aspect, domAttr,
      topic, domConstruct, domClass, lang, array,
      _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
      kanbanColumn, kanbanCard, template){
@@ -10,40 +10,50 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect",
             templateString: template,
             workflowstepsStore: {},
             kanbancardsStore: {},
-            movingNode: null,
+            movingNodes: [],
             mover: [],
             mout: [],
             dndStart: null,
             dndDrop: null,
             dndCancel: null,
-            moveStart: function(show, source, nodes){
-                this.movingNode = source[0];
-                domStyle.set(source[0], 'visibility', 'hidden');
-                domStyle.set(query('.dojoDndAvatar')[0], 'width', domStyle.get(source[0], 'width')+'px');
-                domStyle.set(query('.dojoDndAvatar')[0], 'height', domStyle.get(source[0], 'height')+'px');
-                domStyle.set(source[0], 'display', 'none');
+            moveStart: function(source, nodes, copy){
+                // console.log(source);
+                // console.log(nodes);
+                // console.log(copy);
+                this.movingNodes = nodes;
+                this.movingNodes.style('visibility', 'hidden');
+                query('.dojoDndAvatar').style('width', nodes.style('width')+'px');
+                query('.dojoDndAvatar').style('height', nodes.style('height')+'px');
+                nodes.style('display', 'none');
 
             },
-            moveStop: function(source, nodes, copy){
+            moveStop: function(source, nodes, copy, target){
                 //source.node.id ul catNode
-                this.movingNode = null;
+                this.movingNodes = [];
                 query('.dojoDndItemAnchor').style('display', 'block');
                 query('.dojoDndItemAnchor').style('visibility', 'visible');
+                if ( typeof nodes == "undefined" ) {
+                    return;
+                }
+                console.log(source);
+                nodes.forEach(function(node){console.log(domAttr.get(node, 'dnddata'));});
+                console.log(target);
             },
             moveOver: function(e){
-                if ( null == this.movingNode ) {
+                if ( 0 == this.movingNodes.length ) {
                     return;
                 }
 
                 var position = domClass.contains(itemOver, 'dojoDndItemBefore')?'before':'after';
-                domStyle.set(this.movingNode, 'display', 'block');
-                dojo.place(this.movingNode, itemOver, position);
+                this.movingNodes.style('display', 'block');
+                //dojo.place(this.movingNodes, itemOver, position);
             },
             moveOut: function(e){
-                if ( null == this.movingNode ) {
+                if ( 0 == this.movingNodes.length ) {
                     return;
                 }
-                domStyle.set(this.movingNode, 'display', 'none');
+
+                this.movingNodes.style('display', 'none');
             },
             addCommonListeners: function(source){
                 this.mover.push(aspect.after(source, '_markTargetAnchor', lang.hitch(this, this.moveOver), true));

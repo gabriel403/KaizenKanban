@@ -1,11 +1,12 @@
 define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string", "dojo/dom-construct", "dojo/query",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom",
-    "dojo/text!./kanbanColumn.html", "kk/views/widgets/kanbanBoard/kanbanCard" ],
+    "dojo/text!./kanbanColumn.html", "kk/views/widgets/kanbanBoard/kanbanCard", "dojo/text!./kanbanCard.html" ],
     function(declare, Source, lang, stringUtil, domConstruct, query,
      _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, dom,
-     kanbanColumnTemplate, kanbanCard){
+     kanbanColumnTemplate, kanbanCard, kbCard){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
             templateString: kanbanColumnTemplate,
+            kbCard: kbCard,
             item: null,
             nodes: [],
             copyOnly: false,
@@ -21,9 +22,17 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
                 domConstruct.place(node, this.outernode);
                 return dojo.query(".container", node)[0];
             },
-            cardCreator: function(item){
-                var node = new kanbanCard({item: item});
-                return { node: node.domNode, data: item };
+            cardCreator: function(item, hint){
+                //var node = new kanbanCard({item: item, id: "cbk_"+item.id});
+                var node = domConstruct.toDom(
+                    stringUtil.substitute(
+                        this.kbCard,
+                        item
+                    )
+                );
+                //domConstruct.place(node, this.cardNodes);
+                //node.destroy();
+                return { node: node, data: item };
             },
             // creates a dojo/dnd/Source from the data provided
             postCreate: function(){

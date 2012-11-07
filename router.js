@@ -2,20 +2,21 @@ var fs          = require('fs'),
 url             = require('url'),
 transferTypes   = require('./transfertypes.js');
 
-exports.extTypes = {
+
+var extTypes = {
     "/" : "/index.html"
 }
 
-exports.data = "";
-exports.httpcode = 200;
-exports.transferType = "text/html";
+var pagedata = "";
+var httpcode = 200;
+var transferType = "text/html";
 
-exports.route = function(req, res){
+function route(req, res){
 
     switch(req.method)
     {
         case 'GET':
-            this.GET(req, res);
+            GET(req, res);
             break;
         case 'POST':
             break;
@@ -23,49 +24,51 @@ exports.route = function(req, res){
 
 }
 
-exports.GET = function(req, res) {
+function GET(req, res) {
 
-    exports.data = "";
-    exports.httpcode = 200;
-    exports.transferType = "text/html";
+    pagedata = "";
+    httpcode = 200;
+    transferType = "text/html";
 
 
 
     var path, sdata, parsedUrl;
     parsedUrl = url.parse(req.url);
-    path = exports.specialCaseCheck(parsedUrl.pathname);
+    path = specialCaseCheck(parsedUrl.pathname);
 
     fs.readFile(__dirname + path, function(err, data){
         if (err) {
-            exports.prepareNotFound();
+            prepareNotFound();
         } else {
-            exports.data = data;
-            exports.transferType = transferTypes.getContentType(transferTypes.getExt(path));
+            pagedata = data;
+            transferType = transferTypes.getContentType(transferTypes.getExt(path));
         }
 
-        exports.sendResponse(res);
+        sendResponse(res);
     });
 }
 
-exports.sendResponse = function(res){
+function sendResponse(res){
 
-    res.writeHead(exports.httpcode, {'Content-Type': exports.transferType})
-    res.write(exports.data, 'utf8');
+    res.writeHead(httpcode, {'Content-Type': transferType})
+    res.write(pagedata, 'utf8');
     res.end();
     return exports;
 }
 
-exports.prepareNotFound = function(){
-    exports.httpcode = 404;
-    exports.data = '404';
+function prepareNotFound(){
+    httpcode = 404;
+    pagedata = '404';
     return exports;
 }
 
-exports.specialCaseCheck =  function(path) {
-    if ( path in exports.extTypes ) {
-        return exports.extTypes[path];
+function specialCaseCheck(path) {
+    if ( path in extTypes ) {
+        return extTypes[path];
     } else {
         return path;
     }
 }
 
+
+exports.route = route;
