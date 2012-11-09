@@ -1,0 +1,49 @@
+var sl                  = require('./serviceLocator.js');
+
+
+var httpserver          = {}
+
+httpserver.init         = function(){
+    httpserver.port     = 8000;
+    httpserver.host     = "127.0.0.1";
+    httpserver.server   = null;
+    httpserver.router   = null;
+}
+
+httpserver.createServer = function(port, host) {
+    httpserver.init();
+	if ( typeof port != "undefined") {
+		httpserver.port = port;
+	}
+	if ( typeof host != "undefined") {
+		httpserver.host = host;
+	}
+
+    httpserver.router   = sl.get('router');
+
+    httpserver.server   = sl.get('http').createServer(httpserver.onRequest).listen(httpserver.port, httpserver.host);
+    return httpserver;
+}
+
+httpserver.onRequest    = function(request,response){
+    var data = '';
+    request.on('data',  function (chunk) {data += chunk;});
+    request.on('end',   function () {
+        sl.get('winston').info('Hit request end');
+        sl.get('router').route(request, data, function (routingresponse) {
+            sl.get('winston').info("Sending routingresponse details", {status: routingresponse.httpcode, headers: routingresponse.headdata})
+            // sl.get('winston').info("Sending routingresponse body", {body: routingresponse.body})
+            response.writeHead(routingresponse.httpcode, routingresponse.headdata);
+            response.end(routingresponse.pagedata);
+        });
+    });
+}
+
+// httpserver.routing              = f
+
+httpserver.connectionToString   = function() {
+	return "Server running at http://"+httpserver.host+(80 == httpserver.port?"":":"+httpserver.port);
+}
+
+exports.createServer            = httpserver.createServer;
+exports.connectionToString      = httpserver.connectionToString;

@@ -1,4 +1,4 @@
-define(["dojo/_base/declare", "dojo/_base/lang", "gmk/library/utilities/string"],
+define(["dojo/_base/declare", "dojo/_base/lang", "library/utilities/string"],
     function(declare, lang, strUtil){
         return declare([ ], {
             get: function(varName) {

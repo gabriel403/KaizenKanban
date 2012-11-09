@@ -1,4 +1,6 @@
-var extTypes = { 
+var transferTypes = {}
+
+transferTypes.extTypes 			= { 
 	"3gp"   	: "video/3gpp"
 	, "a"     	: "application/octet-stream"
 	, "ai"    	: "application/postscript"
@@ -166,12 +168,14 @@ var extTypes = {
 	, "zip"   	: "application/zip" 
 };
 
-self = module.exports  = {
-    getExt: function (path) {
-        var i = path.lastIndexOf('.');
-        return (i < 0) ? '' : path.substr(++i);
-    },
-    getContentType: function (ext) {
-        return extTypes[ext.toLowerCase()] || 'application/octet-stream';
-    }
+transferTypes.getExt 			= function (path) {
+    var i = path.lastIndexOf('.');
+    return (i < 0) ? '' : path.substr(++i);
 }
+
+transferTypes.getContentType 	= function (ext) {
+    return transferTypes.extTypes[ext.toLowerCase()] || 'application/octet-stream';
+}
+
+exports.getExt 			= transferTypes.getExt;
+exports.getContentType 	= transferTypes.getContentType;

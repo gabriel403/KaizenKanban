@@ -1,4 +1,4 @@
-define(["dojo/_base/declare", "dojo/_base/lang", "gmk/library/base/getterSetterBase"],
+define(["dojo/_base/declare", "dojo/_base/lang", "library/base/getterSetterBase"],
     function(declare, lang, getterSetterBase){
         return declare([getterSetterBase], {
             setupDom:           function() {
