@@ -1,0 +1,19 @@
+{
+	"name": "Kanban site",
+  	"preferGlobal": "true",
+  	"version": "0.0.1",
+  	"author": "Gabriel Baker <gabriel@autonomicpilot.co.uk>",
+  	"description": "A simple kanban board written in node js and dojo",
+  	"scripts": {
+    	"start": "node ./source/server.js"
+    },
+  	"contributors": [ 
+    	{
+      		"name": "Gabriel Baker",
+      		"email": "gabriel@autonomicpilot.co.uk"
+    	} 
+  	],
+	"dependencies" : {
+		"winston" : "*"
+	}
+}
