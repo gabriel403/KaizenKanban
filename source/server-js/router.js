@@ -30,34 +30,34 @@ router.route 			= function(request, requestdata, callback) {
 	router.parsedUrl	= sl.get('url').parse(request.url);
 	router.path     	= router.specialCaseCheck(router.parsedUrl.pathname);
 
-	sl.get('winston').info("parsed router info", {path: router.path});
+	sl.get('logger').info("parsed router info", {path: router.path});
 
 	var routeresponse 	= {};
 
 	if ( router.path in router.map ) {
-		sl.get('winston').info("route found", {map: router.map[router.path]});
+		sl.get('logger').info("route found", {map: router.map[router.path]});
 		router[router.map[router.path]](request, requestdata, callback);
 	} else {
-		sl.get('winston').info("Default route");
+		sl.get('logger').info("Default route");
 		router[router.map.default](request, requestdata, callback);
 	}
 }
 
 router.default 			= function(request, requestdata, callback) {
 	var filepath = __dirname + '/..' + router.path;
-	sl.get('winston').info("file path", {filepath: filepath});
+	sl.get('logger').info("file path", {filepath: filepath});
 
 	fs.readFile(filepath, function(err, data){
         if (err) {
-            sl.get('winston').error("error in reading path ",{err:err});
+            sl.get('logger').error("error in reading path ",{err:err});
             router.httpcode = 404;
         } else {
-        	sl.get('winston').info("received page data from file");
+        	sl.get('logger').info("received page data from file");
             router.headdata['Content-Type'] = sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(router.path));
             router.pagedata = data;
         }
 
-		// winston.info("route response", {'httpcode': router.httpcode, 'headdata': router.headdata, 'pagedata': router.pagedata});
+		// logger.info("route response", {'httpcode': router.httpcode, 'headdata': router.headdata, 'pagedata': router.pagedata});
 
 		if ( 'undefined' != typeof callback ) {
 			callback({'httpcode': router.httpcode, 'headdata': router.headdata, 'pagedata': router.pagedata});

@@ -40,12 +40,16 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
                 // create the Source
                 this.dndSource = new Source(node, {
                     // ensure that only move operations ever occur from this source
-                    copyOnly:       false,
+                    // copyOnly:       false,
                     // define whether or not this source will accept drops from itself, based on the value passed into
                     // buildCatalog; defaults to true, since this is the default that dojo/dnd uses
-                    selfAccept:     true,
+                    // selfAccept:     true,
                     withHandles:    true,
-                    creator:        lang.hitch(this, this.cardCreator)
+                    creator:        lang.hitch(this, this.cardCreator),
+                    singular:       true,
+                    // generateText:   false,
+                    // autoSync:       true
+                    copyState: function(keyPressed, self){ return false; }
                 });
 
                 // this.nodes.forEach(

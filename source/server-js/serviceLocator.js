@@ -27,7 +27,7 @@ serviceLocator.set      = function(servicename, object, overwrite) {
 
 serviceLocator.set('url',           require('url'));
 serviceLocator.set('http',          require('http'));
-serviceLocator.set('winston',       require('winston'));
+serviceLocator.set('logger',        require('winston'));
 serviceLocator.set('router',        require('./router.js'));
 serviceLocator.set('transferTypes', require('./transferTypes.js'));
 serviceLocator.set('kkhttp',        require('./http.js'));
