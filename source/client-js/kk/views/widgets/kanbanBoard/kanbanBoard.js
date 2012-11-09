@@ -67,16 +67,16 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
                 domClass.toggle(focusedNode, "focusedNode");
             },
             addCommonListeners: function(source){
-                // aspect.after(source, '_markTargetAnchor', lang.hitch(this, this.moveOver), true);
-                // //aspect.after(source, 'onDraggingOut', lang.hitch(this, this.moveOut), true);
-                // query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
+                aspect.after(source, '_markTargetAnchor', lang.hitch(this, this.moveOver), true);
+                //aspect.after(source, 'onDraggingOut', lang.hitch(this, this.moveOut), true);
+                query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
             },
             addOnetimeListeners: function(){
-                // topic.subscribe("/dnd/start", lang.hitch(this, this.moveStart));
-                // topic.subscribe("/dnd/drop", lang.hitch(this, this.moveStop));
-                // topic.subscribe("/dnd/cancel", lang.hitch(this, this.moveStop));
-                // on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
+                topic.subscribe("/dnd/start", lang.hitch(this, this.moveStart));
+                topic.subscribe("/dnd/drop", lang.hitch(this, this.moveStop));
+                topic.subscribe("/dnd/cancel", lang.hitch(this, this.moveStop));
+                on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
             },
             postCreate:         function() {
