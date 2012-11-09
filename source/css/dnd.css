@@ -1,6 +1,8 @@
 body {
     font-family: "Tahoma","Arial","Verdana",sans-serif;
     font-size: 62.5%;
+    width: 100%;
+    padding: 15px 0px 15px 0px;
 }
 
 h1 {
@@ -15,6 +17,27 @@ h1 {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
+
+.dojoDndItem, .dojoDndItemAnchor {
+    padding:3px;
+    border: 1px black solid;
+    margin-bottom: 3px;
+    height: 100px;
+}
+
+.column {
+    width: 1%;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px #336699 solid;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+/*.dojoDndAvatar, .dojoDndItemAnchor, .focusedNode, .dojoDndItemOver {
+    border-width: 2px;
+}*/
 
 .card_id_block {
     width: 50px;
@@ -39,23 +62,12 @@ h1 {
     font-weight: bold;
 }
 
-.dojoDndItem, .dojoDndItemAnchor {
-    padding:3px;
-    border: 1px black solid;
-    margin-bottom: 3px;
-    height: 100px;
-}
-
 .float_left {
     float: left;
 }
 
 .overflow_hidden {
     overflow: hidden;
-}
-
-.focusedNode {
-    border-width: 2px;
 }
 
 .dojoDndItemOver {
@@ -105,7 +117,7 @@ h1 {
 }
 
 .container {
-    min-height: 800px;
+    /*min-height: 800px;*/
 
 }
 
@@ -117,15 +129,7 @@ h1 {
     width: 100%;
 }
 
-body {
-    padding: 15px 15px 15px 0px;
-}
 
 ol, ul {
     list-style: none;
-}
-
-.column {
-    width: 1%;
-    padding-left: 15px;
 }

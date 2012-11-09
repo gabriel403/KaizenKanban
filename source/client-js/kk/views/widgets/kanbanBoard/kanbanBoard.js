@@ -46,7 +46,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 
                 var itemOver            = beforeAfterNodes[0];
 
-                this.movingNodes.forEach(function(node){domConstruct.place(node, itemOver, position);});
+                this.movingNodes.forEach(function(node){domConstruct.place(node, itemOver, position);});                
             },
             moveOut:            function(e){
                 if ( 0 == this.movingNodes.length ) {
@@ -54,29 +54,29 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
                 }
             },
             clickOnCard:        function(e){
-                query('.dojoDndItem').removeClass('focusedNode');
-                var dndItems = query.NodeList();
-                dndItems.push(e.target);
-                var dndItem = dndItems.closest('.dojoDndItem');
-                if ( 0 == dndItem.length ) {
-                    return;
-                }
+                // query('.dojoDndItem').removeClass('focusedNode');
+                // var dndItems = query.NodeList();
+                // dndItems.push(e.target);
+                // var dndItem = dndItems.closest('.dojoDndItem');
+                // if ( 0 == dndItem.length ) {
+                //     return;
+                // }
 
-                var focusedNode = dndItem[0];
-                query('.dojoDndItem').removeClass('focusedNode');
-                domClass.toggle(focusedNode, "focusedNode");
+                // var focusedNode = dndItem[0];
+                // query('.dojoDndItem').removeClass('focusedNode');
+                // domClass.toggle(focusedNode, "focusedNode");
             },
             addCommonListeners: function(source){
                 aspect.after(source, '_markTargetAnchor', lang.hitch(this, this.moveOver), true);
                 //aspect.after(source, 'onDraggingOut', lang.hitch(this, this.moveOut), true);
-                query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
+                // query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
             },
             addOnetimeListeners: function(){
                 topic.subscribe("/dnd/start", lang.hitch(this, this.moveStart));
                 topic.subscribe("/dnd/drop", lang.hitch(this, this.moveStop));
                 topic.subscribe("/dnd/cancel", lang.hitch(this, this.moveStop));
-                on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
+                // on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
             },
             postCreate:         function() {
