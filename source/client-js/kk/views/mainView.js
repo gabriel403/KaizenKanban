@@ -5,7 +5,7 @@ define(["dojo/_base/declare", "library/base/mvc/view", "kk/views/widgets/kanbanB
         		new kanbanBoard({
         			workflowstepsStore	: workflowStore, 
         			kanbancardsStore	: storiesStore
-        		}).placeAt('innerContainer');
+        		}).placeAt('outerContainer');
         	}
         });
 });

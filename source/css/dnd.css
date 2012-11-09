@@ -26,15 +26,28 @@ h1 {
 }
 
 .column {
-    width: 1%;
+/*    display: table-cell;
+    width: 1%;*/
     padding-left: 15px;
     padding-right: 15px;
     border: 1px #336699 solid;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+    vertical-align: initial;
 }
 
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#outerContainer {
+    width: 100%;
+}
+
+
+ol, ul {
+    list-style: none;
+}
 /*.dojoDndAvatar, .dojoDndItemAnchor, .focusedNode, .dojoDndItemOver {
     border-width: 2px;
 }*/
@@ -123,13 +136,4 @@ h1 {
 
 .dojoDndHandle {
     border-bottom: 1px black solid;
-}
-
-.outerContainer {
-    width: 100%;
-}
-
-
-ol, ul {
-    list-style: none;
 }
