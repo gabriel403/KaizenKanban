@@ -19,12 +19,9 @@ define(["dojo/_base/declare", "library/base/mvc/view", "kk/views/widgets/kanbanB
         	setupConnections   : function(){
         		topic.subscribe('/kk/finishedkanban', 	lang.hitch(this, this.realignColumns));
         		topic.subscribe('/kk/nodemoved', 		lang.hitch(this, this.realignColumns));
-                query('.minimisedSource').on('click', 
+                query('.columnToggler').on('click', 
                     function(e){
-                        var nodes = query(e.target).closest(".minimisedSource");
-                        if ( nodes.length == 0 ) {
-                            nodes = query(e.target).closest(".openedSource");
-                        }
+                        var nodes = query(e.target).closest(".column");
                         domClass.toggle(nodes[0], 'minimisedSource');
                         domClass.toggle(nodes[0], 'openedSource');
 
