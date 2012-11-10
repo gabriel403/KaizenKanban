@@ -10,11 +10,11 @@ router.map = {
 router.extTypes     	= {'/' : '/index.html'};
 
 router.specialCaseCheck =  function(path) {
-    if ( path in router.extTypes ) {
-        return router.extTypes[path];
-    } else {
-        return path;
-    }
+	if ( path in router.extTypes ) {
+		return router.extTypes[path];
+	} else {
+		return path;
+	}
 }
 
 router.init = function(){
@@ -48,21 +48,19 @@ router.default 			= function(request, requestdata, callback) {
 	sl.get('logger').info("file path", {filepath: filepath});
 
 	fs.readFile(filepath, function(err, data){
-        if (err) {
-            sl.get('logger').error("error in reading path ",{err:err});
-            router.httpcode = 404;
-        } else {
-        	sl.get('logger').info("received page data from file");
-            router.headdata['Content-Type'] = sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(router.path));
-            router.pagedata = data;
-        }
-
-		// logger.info("route response", {'httpcode': router.httpcode, 'headdata': router.headdata, 'pagedata': router.pagedata});
+		if (err) {
+			sl.get('logger').error("error in reading path ",{err:err});
+			router.httpcode = 404;
+		} else {
+			sl.get('logger').info("received page data from file");
+			router.headdata['Content-Type'] = sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(router.path));
+			router.pagedata = data;
+		}
 
 		if ( 'undefined' != typeof callback ) {
 			callback({'httpcode': router.httpcode, 'headdata': router.headdata, 'pagedata': router.pagedata});
 		}
-    });
+	});
 }
 
 exports.route = router.route;

@@ -24,8 +24,6 @@ define(["dojo/_base/declare", "library/base/mvc/view", "kk/views/widgets/kanbanB
                         var nodes = query(e.target).closest(".column");
                         domClass.toggle(nodes[0], 'minimisedSource');
                         domClass.toggle(nodes[0], 'openedSource');
-
-                        query('.kkcard', nodes[0]).toggleClass('hideme');
                 });
         	},
         	realignColumns     : function() {
