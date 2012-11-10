@@ -1,14 +1,9 @@
-var fs          		= require('fs'),
-sl         				= require('./serviceLocator.js');
+var fs 					= require('fs'),
+sl 						= require('./serviceLocator.js'),
+router 					= {};
 
-var router 				= {};
-
-router.map = {
-	'default': 'default'
-}
-
+router.map 				= {'default': 'default'};
 router.extTypes     	= {'/' : '/index.html'};
-
 router.specialCaseCheck =  function(path) {
 	if ( path in router.extTypes ) {
 		return router.extTypes[path];
@@ -17,7 +12,7 @@ router.specialCaseCheck =  function(path) {
 	}
 }
 
-router.init = function(){
+router.init 			= function(){
 	router.parsedUrl 	= '';
 	router.path 		= '';
 	router.httpcode		= 200;
@@ -44,7 +39,8 @@ router.route 			= function(request, requestdata, callback) {
 }
 
 router.default 			= function(request, requestdata, callback) {
-	var filepath = __dirname + '/..' + router.path;
+	var filepath 		= __dirname + '/..' + router.path;
+	
 	sl.get('logger').info("file path", {filepath: filepath});
 
 	fs.readFile(filepath, function(err, data){
