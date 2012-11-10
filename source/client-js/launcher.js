@@ -2,7 +2,7 @@ require(["dojo/ready", "kk/models/mainModel", "kk/views/mainView", "kk/controlle
     function(ready, mainModel, mainView, dndController){
         ready(function(){
         	var mainModelO 	= new mainModel();
-        	var mainViewO 	= new mainView();
+        	var mainViewO 	= new mainView({'mainModel': mainModelO});
         	new dndController({'mainModel': mainModelO, 'mainView':mainViewO});
         });
     });

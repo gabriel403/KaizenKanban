@@ -6,7 +6,7 @@ define(["dojo/_base/declare", "dojo/json", "dojo/_base/array", "dojo/topic", "do
             mainView    : null,
             constructor : function(props){
                 lang.mixin(this, props);
-                this.mainView.kkbSetup(this.mainModel.workflowStore, this.mainModel.storiesStore);
+                // this.mainView.kkbSetup(this.mainModel.workflowStore, this.mainModel.storiesStore);
             }
         });
 });

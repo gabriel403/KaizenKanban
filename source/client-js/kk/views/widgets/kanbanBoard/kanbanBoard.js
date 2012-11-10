@@ -35,6 +35,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
                         topic.publish("/kk/dndUpdateStore", source.node.id, target.node.id, domAttr.get(node, 'dnddata'));
                         // console.log(domAttr.get(node, 'dnddata'));
                 });
+                topic.publish("/kk/nodemoved");
             },
             moveOver:           function(before){
                 var beforeAfterNodes    = before?query('.dojoDndItemBefore'):query('.dojoDndItemAfter');
@@ -88,6 +89,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 
                     this.addCommonListeners(kbcSource.dndSource);
                 }, this);
+
             }
         });
 });

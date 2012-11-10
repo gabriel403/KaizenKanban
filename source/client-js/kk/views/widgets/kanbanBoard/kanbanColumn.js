@@ -1,28 +1,30 @@
 define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string", "dojo/dom-construct", "dojo/query",
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom", "dojo/dom-style",
     "dojo/text!./kanbanColumn.html", "kk/views/widgets/kanbanBoard/kanbanCard", "dojo/text!./kanbanCard.html" ],
     function(declare, Source, lang, stringUtil, domConstruct, query,
-     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, dom,
+     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, dom, domStyle,
      kanbanColumnTemplate, kanbanCard, kbCard){
-        return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-            templateString: kanbanColumnTemplate,
-            kbCard: kbCard,
-            item: null,
-            nodes: [],
-            copyOnly: false,
-            selfAccept: true,
-            outernone: null,
-            setupDom: function() {
+        return declare([_WidgetBase], {
+            templateString  : kanbanColumnTemplate,
+            kbCard          : kbCard,
+            item            : null,
+            nodes           : [],
+            copyOnly        : false,
+            selfAccept      : true,
+            outernone       : null,
+            minimisedSource : false,
+            setupDom        : function() {
                 var node = domConstruct.toDom(
                     stringUtil.substitute(
                         this.templateString,
                         this.item
                     )
                 );
+
                 domConstruct.place(node, this.outernode);
-                return dojo.query(".container", node)[0];
+                return dojo.query(".columnContainer", node)[0];
             },
-            cardCreator: function(item, hint){
+            cardCreator     : function(item, hint){
                 //var node = new kanbanCard({item: item, id: "cbk_"+item.id});
                 var node = domConstruct.toDom(
                     stringUtil.substitute(
@@ -35,7 +37,7 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
                 return { node: node, data: item };
             },
             // creates a dojo/dnd/Source from the data provided
-            postCreate: function(){
+            postCreate      : function(){
                 var node = this.setupDom();
                 // create the Source
                 this.dndSource = new Source(node, {
