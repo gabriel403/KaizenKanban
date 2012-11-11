@@ -32,7 +32,7 @@ httpserver.onRequest    = function(request,response){
         sl.get('logger').info('Hit request end');
         sl.get('router').route(request, data, function (routingresponse) {
             sl.get('logger').info("Sending routingresponse details", {status: routingresponse.httpcode, headers: routingresponse.headdata})
-            // sl.get('winston').info("Sending routingresponse body", {body: routingresponse.body})
+            sl.get('logger').info("Sending routingresponse body", {body: routingresponse.pagedata})
             response.writeHead(routingresponse.httpcode, routingresponse.headdata);
             response.end(routingresponse.pagedata);
         });

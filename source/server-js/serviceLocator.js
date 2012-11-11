@@ -9,7 +9,7 @@ serviceLocator.get      = function(servicename, clone) {
     if ( servicename in serviceLocator.services ) {
         return serviceLocator.services[servicename];
     } else {
-        throw new Exception("Service not found.")
+        throw new Error("Service "+servicename+" not found.")
     }
 }
 
@@ -31,7 +31,7 @@ serviceLocator.set('logger',        require('winston'));
 serviceLocator.set('router',        require('./router.js'));
 serviceLocator.set('transferTypes', require('./transferTypes.js'));
 serviceLocator.set('kkhttp',        require('./http.js'));
-
+serviceLocator.set('cardController',require('./cardController.js'));
 
 exports.get             = serviceLocator.get;
 exports.set             = serviceLocator.set;

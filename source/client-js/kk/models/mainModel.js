@@ -1,9 +1,9 @@
 define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
 	"library/factories/store", 
-	"dojo/text!kk/models/json/workflow.json", "dojo/text!kk/models/json/stories.json" ],
+	"dojo/text!kk/models/json/workflow.json" ],
     function(declare, json, topic, lang,
      storeFactory, 
-     workflowJson, storiesJson){
+     workflowJson){
         return declare([ ], {
             storiesStore	: null,
             workflowStore	: null,
@@ -13,7 +13,7 @@ define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
             },
             init			: function(){
                 this.workflowStore 	= storeFactory.getInstance(json.parse(workflowJson), 'id');
-                this.storiesStore 	= storeFactory.getInstance(json.parse(storiesJson), 'id');
+                this.storiesStore 	= storeFactory.getInstance("/card", 'id');
         		this.setupConnections();
             },
             setupConnections: function(){
