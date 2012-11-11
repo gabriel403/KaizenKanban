@@ -30,9 +30,18 @@ httpserver.onRequest    = function(request,response){
     request.on('data',  function (chunk) {data += chunk;});
     request.on('end',   function () {
         sl.get('logger').info('Hit request end');
-        sl.get('router').route(request, data, function (routingresponse) {
+        sl.get('router').route(request, data, function (err, routingresponse) {
+            if (err) {
+                var httpcode = 500;
+                if ( 'number' ==  typeof err.code) {
+                    httpcode = err.code;
+                }
+                response.writeHead(httpcode);
+                response.end(err.message);
+                return;
+            }
             sl.get('logger').info("Sending routingresponse details", {status: routingresponse.httpcode, headers: routingresponse.headdata})
-            sl.get('logger').info("Sending routingresponse body", {body: routingresponse.pagedata})
+            // sl.get('logger').info("Sending routingresponse body", {body: routingresponse.pagedata})
             response.writeHead(routingresponse.httpcode, routingresponse.headdata);
             response.end(routingresponse.pagedata);
         });

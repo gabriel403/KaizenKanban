@@ -10,28 +10,43 @@ var CardController 				= function(){
 util.inherits(CardController, events.EventEmitter);
 
 CardController.prototype.storiesfile = __dirname + '/stories.json';
-CardController.prototype.workflow = "";
+CardController.prototype.querymatcher = "";
+CardController.prototype.querymatcherType = "workflow";
 
-CardController.prototype.jsonquery = function(jsonstr) {
-	var self = this;
-	var jsonobj = JSON.parse(jsonstr);
-	var propname = 'workflow';
-	var newjsonobj = [];
+CardController.prototype.jsonquery = function(err, jsonstr) {
+	// console.log(this);
+	if (err) throw err;
+	var self 		= this;
+
+   	sl.get('logger').info("Parsing json string and removing non-"+self.querymatcher);
+
+   	if ( self.querymatcher.length == 0 ) {
+	   	sl.get('logger').info("Emitting sendmessage");
+	   	this.emit('sendmessage', jsonstr);
+	   	return;
+   	}
+
+	var jsonobj 	= JSON.parse(jsonstr);
+	var newjsonobj 	= [];
 	for ( var i in jsonobj ) {
-		if ( jsonobj[i][propname] == self.workflow ) {
+		if ( jsonobj[i][self.querymatcherType] == self.querymatcher ) {
 			newjsonobj.push(jsonobj[i]);
 		}
 	}
+   	sl.get('logger').info("Emitting sendmessage");
    	this.emit('sendmessage', JSON.stringify(newjsonobj));
-
 }
+
 CardController.prototype.GET = function(options) {
 	var self = this;
-	sl.get('logger').info("GET got called", options);
+	sl.get('logger').info("GET got called", util.inspect(options));
 
 	if ( 'workflow' in options.query ) {
-		//get specific cards for workflow
-		self.workflow = options.query.workflow;
+		// get specific cards for workflow
+		self.querymatcher = options.query.workflow;
+	} else if ( 'id' in options.query ) {
+		self.querymatcher 		= options.query.id;
+		self.querymatcherType 	= "id";
 	}
 	self.readJsonFile(self.jsonquery);
 }
@@ -41,7 +56,8 @@ CardController.prototype.readJsonFile = function(callback) {
 	fs.readFile(self.storiesfile, 'utf8', function(err, data) {
 		if (err) throw err;
    		sl.get('logger').info("json file received");
-   		callback.call(self, data);
+   		callback.apply(self, [null, data]);
+   		// callback(null, data);
 	});
 }
 

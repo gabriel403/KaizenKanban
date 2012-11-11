@@ -82,13 +82,21 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             },
             postCreate:         function() {
                 this.addOnetimeListeners();
-                array.forEach(this.workflowstepsStore.query(), function(item){
-                    var itemid      = item.id;
-                    var cards       = this.kanbancardsStore.query({workflow: itemid});
-                    var kbcSource   = new kanbanColumn({item: item, nodes: cards, outernode: this.columnNodes});
-
-                    this.addCommonListeners(kbcSource.dndSource);
-                }, this);
+                var outernode = this.columnNodes;
+                array.forEach(
+                    this.workflowstepsStore.query(), 
+                    function(item){
+                        var itemid          = item.id;
+                        this.kanbancardsStore.query({workflow: itemid}).then(
+                            lang.hitch(
+                                this,
+                                function(cards) {
+                                    var kbcSource   = new kanbanColumn({item: item, nodes: cards, outernode: outernode});
+                                    this.addCommonListeners(kbcSource.dndSource);
+                                })
+                        );
+                }, 
+                this);
 
             }
         });
