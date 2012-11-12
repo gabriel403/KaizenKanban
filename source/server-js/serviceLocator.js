@@ -25,13 +25,14 @@ serviceLocator.set      = function(servicename, object, overwrite) {
     return serviceLocator;
 }
 
-serviceLocator.set('url',           require('url'));
-serviceLocator.set('http',          require('http'));
-serviceLocator.set('logger',        require('winston'));
-serviceLocator.set('router',        require('./router.js'));
-serviceLocator.set('transferTypes', require('./transferTypes.js'));
-serviceLocator.set('kkhttp',        require('./http.js'));
-serviceLocator.set('cardController',require('./cardController.js'));
+serviceLocator.set('url',               require('url'));
+serviceLocator.set('http',              require('http'));
+serviceLocator.set('logger',            require('winston'));
+serviceLocator.set('router',            require('./router.js'));
+serviceLocator.set('transferTypes',     require('./transferTypes.js'));
+serviceLocator.set('kkhttp',            require('./http.js'));
+serviceLocator.set('kanbanController',  require('./kanbanController.js'));
+serviceLocator.set('kkmixin',           require('./library/mixin.js'));
 
 exports.get             = serviceLocator.get;
 exports.set             = serviceLocator.set;

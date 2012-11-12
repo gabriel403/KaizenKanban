@@ -68,10 +68,16 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
                 // domClass.toggle(focusedNode, "focusedNode");
             },
             addCommonListeners: function(source){
-                aspect.after(source, '_markTargetAnchor', lang.hitch(this, this.moveOver), true);
+                aspect.after(source.dndSource, '_markTargetAnchor', lang.hitch(this, this.moveOver), true);
                 //aspect.after(source, 'onDraggingOut', lang.hitch(this, this.moveOut), true);
                 // query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
+                query('.columnToggler', source.node).on('click', 
+                    function(e){
+                        var nodes = query(e.target).closest(".column");
+                        domClass.toggle(nodes[0], 'minimisedSource');
+                        domClass.toggle(nodes[0], 'openedSource');
+                });
             },
             addOnetimeListeners: function(){
                 topic.subscribe("/dnd/start", lang.hitch(this, this.moveStart));
@@ -83,21 +89,22 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             postCreate:         function() {
                 this.addOnetimeListeners();
                 var outernode = this.columnNodes;
-                array.forEach(
-                    this.workflowstepsStore.query(), 
+                this.workflowstepsStore.query().then(lang.hitch(this, this.processWorkflows));
+            },
+            processWorkflows: function(workflows) {
+                array.forEach(workflows, 
                     function(item){
                         var itemid          = item.id;
-                        this.kanbancardsStore.query({workflow: itemid}).then(
-                            lang.hitch(
-                                this,
-                                function(cards) {
-                                    var kbcSource   = new kanbanColumn({item: item, nodes: cards, outernode: outernode});
-                                    this.addCommonListeners(kbcSource.dndSource);
-                                })
-                        );
-                }, 
+                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, item));
+                    }, 
                 this);
 
+            },
+            processCards: function(workflow, cards) {
+                var kbcSource   = new kanbanColumn({item: workflow});
+                kbcSource.dndSource.insertNodes(false, cards);
+                kbcSource.placeAt(this.columnNodes)
+                this.addCommonListeners(kbcSource);
             }
         });
 });

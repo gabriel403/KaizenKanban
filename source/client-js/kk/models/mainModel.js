@@ -12,8 +12,8 @@ define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
                 this.init();
             },
             init			: function(){
-                this.workflowStore 	= storeFactory.getInstance(json.parse(workflowJson), 'id');
-                this.storiesStore 	= storeFactory.getInstance("/card/", 'id');
+                this.workflowStore 	= storeFactory.getInstance("/workflow/", 'id');
+                this.storiesStore 	= storeFactory.getInstance("/stories/", 'id');
         		this.setupConnections();
             },
             setupConnections: function(){

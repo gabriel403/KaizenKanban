@@ -28,8 +28,9 @@ Router.prototype.messageHandler = function(message){
 }
 
 Router.prototype.map 			= {
-	'default'	: {'callback': 'default', 	'type': 'normal', 	'location': 'self'},
-	'/card/*'	: {'callback': 'rest', 		'type': 'json', 	'location': 'cardController'}
+	'default'		: {'callback': 'default', 	'type': 'normal', 	'location': 'self', 			'options': {}},
+	'/stories/*'	: {'callback': 'rest', 		'type': 'json', 	'location': 'kanbanController', 'options': {'type': 'stories'}},
+	'/workflow/*'	: {'callback': 'rest', 		'type': 'json', 	'location': 'kanbanController', 'options': {'type': 'workflow'}}
 };
 
 Router.prototype.extTypes     	= {'/' : '/index.html'};
@@ -102,22 +103,29 @@ Router.prototype.handle 			= function(request, requestdata){
 
 	var routeselection = "default";
 
+	// straight match
 	if ( self.path in self.map ) {
 		routeselection = self.path;
 	} else {
 		for ( var i in self.map ) {
 			var regex = self.path.match(new RegExp(prepRe(i)));
+
+			// regexp match
 			if ( null != regex ) {
 				// console.log("matched to", i);
 				routeselection = i;
 			}
+
+			// regex with id match
 			if ( null != regex && regex.length > 1 && regex[1].length > 0 ) {
 				self.parsedUrl.query.id = regex[1];
 				// console.log("id found", regex[1]);
 			}
 		}
 	}
+	
 	self.route = self.map[routeselection];
+	sl.get('kkmixin').hardMixin(self.parsedUrl.query, self.route.options);
 	sl.get('logger').info(routeselection+" route");
 	self[self.route.callback](request, requestdata);
 }
@@ -133,7 +141,7 @@ var route 				= function(request, requestdata, callback) {
 
 	var d 				= domain.create();
 	d.on('error', 		function(err) {
-		sl.get('logger').error("domain error", {err: err});
+		sl.get('logger').error("domain error", util.inspect(err));
 		callback(err);
 	});
 	// d.on('sendmessage',	function(message){
