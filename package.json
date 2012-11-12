@@ -1,19 +1,20 @@
 {
-	"name": "kaizen-kanban",
-  	"preferGlobal": "true",
-  	"version": "0.0.1",
-  	"author": "Gabriel Baker <gabriel@autonomicpilot.co.uk>",
-  	"description": "A simple kanban board written in node js and dojo",
-  	"scripts": {
-    	"start": "node ./source/server.js"
+    "name"          : "kaizen-kanban",
+    "preferGlobal"  : "true",
+    "version"       : "0.0.1",
+    "author"        : "Gabriel Baker <gabriel@autonomicpilot.co.uk>",
+    "description"   : "A simple kanban board written in node js and dojo",
+    "engines"       : { "node": ">= 0.8.0" },
+    "scripts"       : {
+        "start"     : "node ./source/server.js"
     },
-  	"contributors": [ 
-    	{
-      		"name": "Gabriel Baker",
-      		"email": "gabriel@autonomicpilot.co.uk"
-    	} 
-  	],
-	"dependencies" : {
-		"winston" : "*"
-	}
+    "contributors"  : [ 
+        {
+            "name"  : "Gabriel Baker",
+            "email" : "gabriel@autonomicpilot.co.uk"
+        } 
+    ],
+    "dependencies"  : {
+        "winston"   : "*"
+    }
 }
