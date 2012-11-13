@@ -13,6 +13,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             workflowstepsStore: {},
             kanbancardsStore:   {},
             movingNodes:        [],
+            kbcs:               {},
             moveStart:          function(source, nodes, copy){
                 this.movingNodes = nodes;
                 this.movingNodes.forEach(function(node){query('div', node).style('visibility', 'hidden');});
@@ -88,18 +89,32 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             },
             processWorkflows: function(workflows) {
                 array.forEach(workflows, 
-                    function(item){
+                    function(item, index, workflowarray){
+                        var finalflow = false;
+                        if ( workflowarray.length == index+1 ) {
+                            finalflow = true;
+                        }
                         var itemid          = item.id;
-                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, item));
+                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, item, finalflow));
                     }, 
                 this);
 
             },
-            processCards: function(workflow, cards) {
+            processCards: function(workflow, finalflow, cards) {
                 var kbcSource   = new kanbanColumn({item: workflow});
                 kbcSource.dndSource.insertNodes(false, cards);
-                kbcSource.placeAt(this.columnNodes)
-                this.addCommonListeners(kbcSource);
+                this.kbcs[workflow.id] = kbcSource;
+                if ( finalflow ) {
+                    this.processOrderPlaceWorkflows();
+                }
+            },
+            processOrderPlaceWorkflows: function() {
+                for (i in this.kbcs) {
+                    var kbcSource = this.kbcs[i];
+                    kbcSource.placeAt(this.columnNodes)
+                    this.addCommonListeners(kbcSource);
+                }
+
             }
         });
 });
