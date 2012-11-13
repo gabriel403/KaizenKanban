@@ -1,7 +1,0 @@
-[
-	{"title": "Backlog",                "id": "bcklog",	"initialstate": "minimisedSource"},
-	{"title": "RFC",                    "id": "rfc",	"initialstate": "openedSource"},
-    {"title": "Awaiting Development",   "id": "awdev",	"initialstate": "openedSource"},
-    {"title": "In Development",         "id": "indev",	"initialstate": "openedSource"},
-    {"title": "Completed",              "id": "cmpltd",	"initialstate": "minimisedSource"}
-]

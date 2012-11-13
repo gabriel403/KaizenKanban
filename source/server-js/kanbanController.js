@@ -16,15 +16,15 @@ KanbanController.prototype.querymatcherType = "workflow";
 KanbanController.prototype.jsonquery 		= function(err, jsonstr) {
 	// console.log(this);
 	if (err) throw err;
-	var self 		= this;
+	var self = this;
 
-   	sl.get('logger').info("Parsing json string and removing non-"+self.querymatcher);
+	sl.get('logger').info("Parsing json string and removing non-"+self.querymatcher);
 
-   	if ( !self.querymatcher ) {
-	   	sl.get('logger').info("Emitting sendmessage");
-	   	this.emit('sendmessage', jsonstr);
-	   	return;
-   	}
+	if ( !self.querymatcher ) {
+		sl.get('logger').info("Emitting sendmessage");
+		this.emit('sendmessage', jsonstr);
+		return;
+	}
 
 	var jsonobj 	= JSON.parse(jsonstr);
 	var newjsonobj 	= [];
@@ -33,8 +33,8 @@ KanbanController.prototype.jsonquery 		= function(err, jsonstr) {
 			newjsonobj.push(jsonobj[i]);
 		}
 	}
-   	sl.get('logger').info("Emitting sendmessage");
-   	this.emit('sendmessage', JSON.stringify(newjsonobj));
+	sl.get('logger').info("Emitting sendmessage");
+	this.emit('sendmessage', JSON.stringify(newjsonobj));
 }
 
 KanbanController.prototype.GET 				= function(options) {
@@ -59,10 +59,10 @@ KanbanController.prototype.readJsonFile 	= function(callback) {
 	var self = this;
 	fs.readFile(self.storiesfile, 'utf8', function(err, data) {
 		if (err) throw err;
-   		sl.get('logger').info("json file received");
-   		callback.apply(self, [null, data]);
+		sl.get('logger').info("json file received");
+		callback.apply(self, [null, data]);
    		// callback(null, data);
-	});
+   	});
 }
 
 exports.obj = KanbanController;

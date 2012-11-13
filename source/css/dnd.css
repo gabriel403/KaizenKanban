@@ -1,5 +1,15 @@
 html, body {
     min-height: 100%;
+    height: 100%;
+}
+/*html, body, table#outerContainer, tr.innerContainer  {
+    min-height: 100%;
+}
+body, table#outerContainer, tr.innerContainer  {
+    height: 100%;
+}*/
+.innerContainer {
+    overflow: auto;
 }
 .columnToggler {
 }
@@ -38,9 +48,12 @@ html, body {
 .hideme {
     display: none;
 }
-
+#fakepadding {
+    height: 2%;
+}
 #upperBar {
-    height: 30px;
+    /*height: 30px;*/
+    height: 4%;
     width: 100%;
     background-color: black;
     color: white;
@@ -57,7 +70,7 @@ body {
     font-family: "Tahoma","Arial","Verdana",sans-serif;
     font-size: 62.5%;
     width: 100%;
-    padding: 15px 0px 15px 0px;
+    /*padding: 15px 0px 15px 0px;*/
     margin: 0px;
 }
 
@@ -130,6 +143,8 @@ table {
 
 #outerContainer {
     width: 100%;
+    overflow: auto;
+    height: 94%;
 }
 
 ol, ul {

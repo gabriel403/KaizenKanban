@@ -1,6 +1,5 @@
 define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
-	"library/factories/store", 
-	"dojo/text!kk/models/json/workflow.json" ],
+	"library/factories/store" ],
     function(declare, json, topic, lang,
      storeFactory, 
      workflowJson){
