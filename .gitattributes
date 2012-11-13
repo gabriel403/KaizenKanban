@@ -1,0 +1,6 @@
+*        text=auto
+
+*.html   text diff=html
+*.css    text
+*.js     text
+*.sql    text
