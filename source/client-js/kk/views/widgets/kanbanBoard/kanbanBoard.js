@@ -13,7 +13,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             workflowstepsStore: {},
             kanbancardsStore:   {},
             movingNodes:        [],
-            kbcs:               {},
+            kbcs:               [],
             moveStart:          function(source, nodes, copy){
                 this.movingNodes = nodes;
                 this.movingNodes.forEach(function(node){query('div', node).style('visibility', 'hidden');});
@@ -90,31 +90,21 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             processWorkflows: function(workflows) {
                 array.forEach(workflows, 
                     function(item, index, workflowarray){
-                        var finalflow = false;
-                        if ( workflowarray.length == index+1 ) {
-                            finalflow = true;
-                        }
                         var itemid          = item.id;
-                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, item, finalflow));
+                        var kbcSource   = new kanbanColumn({item: item});
+                        this.kbcs[item.id] = kbcSource;
+                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, item));
                     }, 
                 this);
 
             },
-            processCards: function(workflow, finalflow, cards) {
-                var kbcSource   = new kanbanColumn({item: workflow});
-                kbcSource.dndSource.insertNodes(false, cards);
-                this.kbcs[workflow.id] = kbcSource;
-                if ( finalflow ) {
-                    this.processOrderPlaceWorkflows();
-                }
+            processCards: function(workflow, cards) {
+                this.kbcs[workflow.id].dndSource.insertNodes(false, cards);
+                this.kbcs[workflow.id].placeAt(this.columnNodes)
+                this.addCommonListeners(this.kbcs[workflow.id]);
+                this.processOrderPlaceWorkflows();
             },
             processOrderPlaceWorkflows: function() {
-                for (i in this.kbcs) {
-                    var kbcSource = this.kbcs[i];
-                    kbcSource.placeAt(this.columnNodes)
-                    this.addCommonListeners(kbcSource);
-                }
-
             }
         });
 });
