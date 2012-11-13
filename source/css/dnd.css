@@ -2,7 +2,6 @@ html, body {
     min-height: 100%;
 }
 .columnToggler {
-    vertical-align: sub;
 }
 .columnContainer {
     padding-left: 0px;
@@ -15,11 +14,13 @@ html, body {
 .openedSource .columnHider {
     font-size: 2em;
     display: inline-block;
+    vertical-align: sub;
 }
 
 .minimisedSource .columnShower {
-    font-size: 2em;
+    font-size: 1.2em;
     display: inline-block;
+    vertical-align: baseline;
 }
 
 .minimisedSource .kkcard {
@@ -63,10 +64,6 @@ body {
 h1 {
     font-size: 2em;
     display: inline-block;
-}
-.minimisedSource {
-    background-color: #DEDEDE;
-    width: 20px;
 }
 .minimisedSource h1 {
 /*    color:#333;
@@ -116,6 +113,13 @@ h1 {
     border-right: 1px #B0B0B0 dotted;
     border-left: 1px #B0B0B0 dotted;
     vertical-align: initial;
+}
+
+.minimisedSource {
+    background-color: #DEDEDE;
+    width: 20px;
+    padding-left: 10px;
+    padding-right: 5px;
 }
 
 table {
