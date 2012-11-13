@@ -60,6 +60,11 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
                 //     });
                 // this.dndSource.insertNodes(false, this.nodes);
                 return this.dndSource;
+            },
+            toggler: function(e) {
+                var nodes = query(e.target).closest(".column");
+                domClass.toggle(nodes[0], 'minimisedSource');
+                domClass.toggle(nodes[0], 'openedSource');
             }
         });
 });

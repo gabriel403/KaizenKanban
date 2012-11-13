@@ -72,12 +72,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
                 //aspect.after(source, 'onDraggingOut', lang.hitch(this, this.moveOut), true);
                 // query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
-                query('.columnToggler', source.node).on('click', 
-                    function(e){
-                        var nodes = query(e.target).closest(".column");
-                        domClass.toggle(nodes[0], 'minimisedSource');
-                        domClass.toggle(nodes[0], 'openedSource');
-                });
+
             },
             addOnetimeListeners: function(){
                 topic.subscribe("/dnd/start", lang.hitch(this, this.moveStart));
