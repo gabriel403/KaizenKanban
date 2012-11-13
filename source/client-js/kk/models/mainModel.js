@@ -20,7 +20,13 @@ define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
                 topic.subscribe("/kk/dndUpdateStore", lang.hitch(this, this.updatestores));
             },
             updatestores	: function(source, target, node){
-                this.storiesStore.get(node).workflow = target;
+                this.storiesStore.get(node).then(
+                    lang.hitch(this, function(storenode) {
+                        storenode.workflow = target;
+                        console.log(storenode);
+                        this.storiesStore.put(storenode);                        
+                    })
+                );
             }
         });
 });
