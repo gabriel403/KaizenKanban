@@ -1,6 +1,7 @@
 <td class="column ${item.initialstate}">
-    <h1 class="columnTitle">${item.title}</h1>
-    <span class="columnHider columnToggler" data-dojo-attach-event="onclick:toggler"><<<</span>
-    <span class="columnShower columnToggler" data-dojo-attach-event="onclick:toggler">>>></span>
+    <h1 class="columnTitle">
+	    <span class="columnShower columnToggler clickable" data-dojo-attach-event="onclick:toggler">+</span>${item.title}
+	    <span class="columnHider columnToggler clickable" data-dojo-attach-event="onclick:toggler">-</span>
+	</h1>
     <ul id="${item.id}" class="columnContainer" data-dojo-attach-point="cardNodes"></ul>
 </td>
