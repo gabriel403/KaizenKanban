@@ -1,8 +1,8 @@
 define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string", "dojo/dom-construct", "dojo/query",
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom", "dojo/dom-style",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom-class", "dojo/dom", "dojo/dom-style",
     "dojo/text!./kanbanColumn.html", "kk/views/widgets/kanbanBoard/kanbanCard", "dojo/text!./kanbanCard.html" ],
     function(declare, Source, lang, stringUtil, domConstruct, query,
-     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, dom, domStyle,
+     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, domClass, dom, domStyle,
      kanbanColumnTemplate, kanbanCard, kbCard){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
             templateString  : kanbanColumnTemplate,
