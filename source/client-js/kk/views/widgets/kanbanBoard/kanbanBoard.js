@@ -92,16 +92,16 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
                     function(item, index, workflowarray){
                         var itemid          = item.id;
                         var kbcSource   = new kanbanColumn({item: item});
-                        this.kbcs[item.id] = kbcSource;
-                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, item));
+                        this.kbcs.push(kbcSource);
+                        kbcSource.placeAt(this.columnNodes)
+                        this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, kbcSource));
                     }, 
                 this);
 
             },
-            processCards: function(workflow, cards) {
-                this.kbcs[workflow.id].dndSource.insertNodes(false, cards);
-                this.kbcs[workflow.id].placeAt(this.columnNodes)
-                this.addCommonListeners(this.kbcs[workflow.id]);
+            processCards: function(kbcSource, cards) {
+                kbcSource.dndSource.insertNodes(false, cards);
+                this.addCommonListeners(kbcSource);
                 this.processOrderPlaceWorkflows();
             },
             processOrderPlaceWorkflows: function() {
