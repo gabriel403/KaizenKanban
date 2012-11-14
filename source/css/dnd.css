@@ -2,6 +2,16 @@ html, body {
     min-height: 100%;
     height: 100%;
 }
+#titleBar {
+    height: 12%;
+}
+#upperBar {
+    /*height: 30px;*/
+    height: 4%;
+}
+#outerContainer {
+    height: 84%;
+}
 /*html, body, table#outerContainer, tr.innerContainer  {
     min-height: 100%;
 }
@@ -48,12 +58,7 @@ body, table#outerContainer, tr.innerContainer  {
 .hideme {
     display: none;
 }
-#fakepadding {
-    height: 2%;
-}
 #upperBar {
-    /*height: 30px;*/
-    height: 4%;
     width: 100%;
     background-color: black;
     color: white;
@@ -144,7 +149,6 @@ table {
 #outerContainer {
     width: 100%;
     overflow: auto;
-    height: 94%;
 }
 
 ol, ul {
