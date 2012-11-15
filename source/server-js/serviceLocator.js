@@ -33,6 +33,7 @@ serviceLocator.set('transferTypes',     require('./transferTypes.js'));
 serviceLocator.set('kkhttp',            require('./http.js'));
 serviceLocator.set('kanbanController',  require('./kanbanController.js'));
 serviceLocator.set('kkmixin',           require('./library/mixin.js'));
+serviceLocator.set('jsonutil',          require('./library/jsonUtil.js'));
 
 exports.get             = serviceLocator.get;
 exports.set             = serviceLocator.set;

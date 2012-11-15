@@ -67,7 +67,7 @@ Router.prototype.rest 				= function(request, requestdata){
 
 	if ( request.method in obj ) {
 		sl.get('logger').info("calling on object", {method: request.method});
-		obj[request.method](self.parsedUrl)
+		obj[request.method](self.parsedUrl, requestdata);
 	} else {
 		// pattern = escapeRe(pattern)
 
@@ -136,6 +136,7 @@ Router.prototype.getReponseObject 	= function(){
 }
 
 var route 				= function(request, requestdata, callback) {
+	// console.log(requestdata);
 	var router 			= new Router();
 	router.sendMessage 	= callback;
 

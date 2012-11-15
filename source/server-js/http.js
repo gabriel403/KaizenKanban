@@ -37,7 +37,7 @@ httpserver.onRequest    = function(request,response){
                     httpcode = err.code;
                 }
                 response.writeHead(httpcode);
-                response.end(err.message);
+                response.end(err.message + '\n' + err.stack);
                 return;
             }
             sl.get('logger').info("Sending routingresponse details", {status: routingresponse.httpcode, headers: routingresponse.headdata})
@@ -51,7 +51,7 @@ httpserver.onRequest    = function(request,response){
 // httpserver.routing              = f
 
 httpserver.connectionToString   = function() {
-	return "Server running at http://"+httpserver.host+(80 == httpserver.port?"":":"+httpserver.port);
+	return "Server running at http://" + httpserver.host + (80 == httpserver.port ? "" : ":"+httpserver.port);
 }
 
 exports.createServer            = httpserver.createServer;

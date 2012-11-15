@@ -1,11 +1,1 @@
-[
-    {"id": "1", "name": "some name 1", "description": "lol a desc 1", "workflow": "rfc"},
-    {"id": "2", "name": "some name 2", "description": "lol a desc 2", "workflow": "rfc"},
-    {"id": "3", "name": "some name 3", "description": "lol a desc 3", "workflow": "rfc"},
-    {"id": "4", "name": "some name 4", "description": "lol a desc 4", "workflow": "indev"},
-    {"id": "5", "name": "some name 5", "description": "lol a desc 5", "workflow": "rfc"},
-    {"id": "6", "name": "some name 6", "description": "lol a desc 6", "workflow": "awdev"},
-    {"id": "7", "name": "some name 7", "description": "lol a desc 7", "workflow": "indev"},
-    {"id": "8", "name": "some name 8", "description": "lol a desc 8", "workflow": "awdev"},
-    {"id": "9", "name": "some name 9", "description": "lol a desc 9", "workflow": "indev"}
-]
+[{"id":"1","name":"some name 1","description":"lol a desc 1","workflow":"rfc"},{"id":"2","name":"some name 2","description":"lol a desc 2","workflow":"rfc"},{"id":"3","name":"some name 3","description":"lol a desc 3","workflow":"rfc"},{"id":"4","name":"some name 4","description":"lol a desc 4","workflow":"indev"},{"id":"5","name":"some name 5","description":"lol a desc 5","workflow":"rfc"},{"id":"6","name":"some name 6","description":"lol a desc 6","workflow":"rfc"},{"id":"7","name":"some name 7","description":"lol a desc 7","workflow":"indev"},{"id":"8","name":"some name 8","description":"lol a desc 8","workflow":"rfc"},{"id":"9","name":"some name 9","description":"lol a desc 9","workflow":"indev"}]

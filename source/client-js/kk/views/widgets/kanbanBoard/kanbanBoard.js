@@ -76,9 +76,9 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 
             },
             addOnetimeListeners: function(){
-                topic.subscribe("/dnd/start", lang.hitch(this, this.moveStart));
-                topic.subscribe("/dnd/drop", lang.hitch(this, this.moveStop));
-                topic.subscribe("/dnd/cancel", lang.hitch(this, this.moveStop));
+                topic.subscribe("/dnd/start",   lang.hitch(this, this.moveStart));
+                topic.subscribe("/dnd/drop",    lang.hitch(this, this.moveStop));
+                topic.subscribe("/dnd/cancel",  lang.hitch(this, this.moveStop));
                 // on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
                 //topic.subscribe("/dnd/source/over", moveStop);
             },
@@ -90,7 +90,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             processWorkflows: function(workflows) {
                 array.forEach(workflows, 
                     function(item, index, workflowarray){
-                        var itemid          = item.id;
+                        var itemid      = item.id;
                         var kbcSource   = new kanbanColumn({item: item});
                         this.kbcs.push(kbcSource);
                         kbcSource.placeAt(this.columnNodes)

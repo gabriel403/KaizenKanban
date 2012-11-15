@@ -10,36 +10,11 @@ var KanbanController 				= function(){
 util.inherits(KanbanController, events.EventEmitter);
 
 KanbanController.prototype.storiesfile 		= __dirname + '/stories.json';
-KanbanController.prototype.querymatcher 	= false;
-KanbanController.prototype.querymatcherType = "workflow";
+KanbanController.prototype.queryVal 		= null;
+KanbanController.prototype.queryVar 		= 'workflow';
 
-KanbanController.prototype.jsonquery 		= function(err, jsonstr) {
-	// console.log(this);
-	if (err) throw err;
+KanbanController.prototype.prepareData		= function(options) {
 	var self = this;
-
-	sl.get('logger').info("Parsing json string and removing non-"+self.querymatcher);
-
-	if ( !self.querymatcher ) {
-		sl.get('logger').info("Emitting sendmessage");
-		this.emit('sendmessage', jsonstr);
-		return;
-	}
-
-	var jsonobj 	= JSON.parse(jsonstr);
-	var newjsonobj 	= [];
-	for ( var i in jsonobj ) {
-		if ( jsonobj[i][self.querymatcherType] == self.querymatcher ) {
-			newjsonobj.push(jsonobj[i]);
-		}
-	}
-	sl.get('logger').info("Emitting sendmessage");
-	this.emit('sendmessage', JSON.stringify(newjsonobj));
-}
-
-KanbanController.prototype.GET 				= function(options) {
-	var self = this;
-	sl.get('logger').info("GET got called", util.inspect(options));
 
 	if ( 'type' in options.query ) {
 		self.storiesfile = __dirname + '/'+options.query.type+'.json'
@@ -47,12 +22,74 @@ KanbanController.prototype.GET 				= function(options) {
 
 	if ( 'workflow' in options.query ) {
 		// get specific cards for workflow
-		self.querymatcher = options.query.workflow;
-	} else if ( 'id' in options.query ) {
-		self.querymatcher 		= options.query.id;
-		self.querymatcherType 	= "id";
+		self.queryVal = options.query.workflow;
 	}
-	self.readJsonFile(self.jsonquery);
+	if ( 'id' in options.query ) {
+		self.queryVal 	= options.query.id;
+		self.queryVar 	= "id";
+	}
+}
+
+KanbanController.prototype.PUT 				= function(options, payload) {
+	// var err = new Error("Not yet implemented.");
+	// err.code = 501;
+	// throw err;
+
+	if ( 'undefined' == typeof payload ) {
+		var err = new Error("No payload.");
+		err.code = 400;
+		throw err;
+	}
+
+	var jsonutil 	= sl.get('jsonutil');
+
+	var self 		= this;
+	self.payload 	= payload;
+	self.prepareData(options);
+
+	console.log(self.payload);
+
+	self.readJsonFile(function(err, data){
+		var self 	= this;
+		console.log(self.payload);
+		data 		= jsonutil.parse(data);
+		var dataI 	= jsonutil.jsonindex(data, self.queryVar, self.queryVal);
+		data[dataI] = jsonutil.parse(self.payload);
+		data 		= jsonutil.stringify(data);
+		self.writeJsonFile(data, function(err){
+			var self = this;
+			self.emit('sendmessage', data);
+		});
+	});
+	// throw new Error("Not yet implemented").code = 501;
+}
+
+KanbanController.prototype.POST 			= function(options, payload) {
+	var err = new Error("Not yet implemented.");
+	err.code = 501;
+	throw err;
+}
+
+KanbanController.prototype.DELETE 			= function(options, payload) {
+	var err = new Error("Not yet implemented.");
+	err.code = 501;
+	throw err;
+}
+
+KanbanController.prototype.GET 				= function(options, payload) {
+	var jsonutil 	= sl.get('jsonutil');
+
+	var self = this;
+	sl.get('logger').info("GET got called", util.inspect(options));
+
+	self.prepareData(options);
+
+	self.readJsonFile(function(err, data){
+		data = jsonutil.parse(data);
+		data = (self.queryVar == "id" ? jsonutil.jsonid(data, self.queryVar, self.queryVal) : jsonutil.jsonquery(data, self.queryVar, self.queryVal));
+		data = jsonutil.stringify(data);
+		this.emit('sendmessage', data);
+	});
 }
 
 KanbanController.prototype.readJsonFile 	= function(callback) {
@@ -65,4 +102,21 @@ KanbanController.prototype.readJsonFile 	= function(callback) {
    	});
 }
 
+KanbanController.prototype.writeJsonFile 	= function(callback) {
+	var self = this;
+	fs.readFile(self.storiesfile, 'utf8', function(err, data) {
+		if (err) throw err;
+		sl.get('logger').info("json file received");
+		callback.apply(self, [null, data]);
+   		// callback(null, data);
+   	});
+}
+KanbanController.prototype.writeJsonFile 	= function(data, callback) {
+	var self = this;
+	fs.writeFile(self.storiesfile, data, 'utf8', function (err) {
+		if (err) throw err;
+		sl.get('logger').info("json file saved");
+		callback.apply(self, [null]);
+	});
+}
 exports.obj = KanbanController;
