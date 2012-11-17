@@ -102,6 +102,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
             processCards: function(kbcSource, cards) {
                 kbcSource.dndSource.insertNodes(false, cards);
                 this.addCommonListeners(kbcSource);
+                topic.publish('/kk/finishedkanban');
                 this.processOrderPlaceWorkflows();
             },
             processOrderPlaceWorkflows: function() {

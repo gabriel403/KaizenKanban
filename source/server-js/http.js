@@ -1,35 +1,30 @@
 var sl                  = require('./serviceLocator.js');
 
-
-var httpserver          = {}
-
-httpserver.init         = function(){
-    httpserver.port     = 8000;
-    httpserver.host     = "127.0.0.1";
-    httpserver.server   = null;
-    httpserver.router   = null;
+var httpserver                      = function(){
+    this.port     = 8000;
+    this.host     = "127.0.0.1";
+    this.server   = null;
+    this.router   = null;
 }
 
-httpserver.createServer = function(port, host) {
-    httpserver.init();
-	if ( typeof port != "undefined") {
-		httpserver.port = port;
+httpserver.prototype.createServer   = function(port, host) {
+    var self = this;
+	if ( typeof port != "undefined" ) {
+		self.port = port;
 	}
-	if ( typeof host != "undefined") {
-		httpserver.host = host;
+	if ( typeof host != "undefined" ) {
+		self.host = host;
 	}
 
-    httpserver.router   = sl.get('router');
-
-    httpserver.server   = sl.get('http').createServer(httpserver.onRequest).listen(httpserver.port, httpserver.host);
-    return httpserver;
+    self.server   = sl.get('http').createServer(self.onRequest).listen(self.port, self.host);
+    return self;
 }
 
-httpserver.onRequest    = function(request,response){
+httpserver.prototype.onRequest      = function(request, response){
     var data = '';
     request.on('data',  function (chunk) {data += chunk;});
     request.on('end',   function () {
-        sl.get('logger').info('Hit request end');
+        sl.get('logger').info('Hit request end', request.url);
         sl.get('router').route(request, data, function (err, routingresponse) {
             if (err) {
                 var httpcode = 500;
@@ -40,19 +35,19 @@ httpserver.onRequest    = function(request,response){
                 response.end(err.message + '\n' + err.stack);
                 return;
             }
-            sl.get('logger').info("Sending routingresponse details", {status: routingresponse.httpcode, headers: routingresponse.headdata})
+            sl.get('logger').info("Sending routingresponse details", {status: routingresponse.httpcode, headers: routingresponse.headdata, encoding: routingresponse.encoding})
             // sl.get('logger').info("Sending routingresponse body", {body: routingresponse.pagedata})
             response.writeHead(routingresponse.httpcode, routingresponse.headdata);
-            response.end(routingresponse.pagedata);
+            response.end(routingresponse.pagedata, routingresponse.encoding);
         });
     });
 }
 
 // httpserver.routing              = f
 
-httpserver.connectionToString   = function() {
-	return "Server running at http://" + httpserver.host + (80 == httpserver.port ? "" : ":"+httpserver.port);
+httpserver.prototype.connectionToString   = function() {
+    var self = this;
+	return "Server running at http://" + self.host + (80 == self.port ? "" : ":"+self.port);
 }
 
-exports.createServer            = httpserver.createServer;
-exports.connectionToString      = httpserver.connectionToString;
+exports.http            = httpserver;

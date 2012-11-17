@@ -3,10 +3,34 @@ util 					= require('util'),
 sl 						= require('./serviceLocator.js'),
 domain 					= require('domain'),
 events 					= require('events');
+
+// var Response = function(){}
+
+// Response.prototype.prepare = function(url, pagedata){
+// 	this.pagedata = pagedata;
+// 	sl.get('url').parse(url, true)
+// 	var path     					= self.specialCaseCheck(self.parsedUrl.pathname);
+// 	this.headdata['Content-Type'] 	= sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(path));
+// 	this.encoding 				= sl.get('transferTypes').getContentEncoding(sl.get('transferTypes').getExt(path));
+
+// 	return {'httpcode': httpcode};
+// }
+
+
+
 var Router 				= function(){
 	var self 			= this;
+
+	this.extTypes     	= {'/' : '/index.html'};
+	this.parsedUrl 		= '';
+	this.path 			= '';
+	this.httpcode		= 200;
+	this.headdata		= {'Content-Type': 'text/html'};
+	this.pagedata		= "";
+	this.pageencoding 	= "utf8";
+	this.route			= "";
+
 	events.EventEmitter.call(self);
-	// self.on('merror', 		self.errorHandler);
 	self.on('sendmessage', 	self.messageHandler);
 };
 
@@ -33,14 +57,6 @@ Router.prototype.map 			= {
 	'/workflow/*'	: {'callback': 'rest', 		'type': 'json', 	'location': 'kanbanController', 'options': {'type': 'workflow'}}
 };
 
-Router.prototype.extTypes     	= {'/' : '/index.html'};
-
-Router.prototype.parsedUrl 		= '';
-Router.prototype.path 			= '';
-Router.prototype.httpcode		= 200;
-Router.prototype.headdata		= {'Content-Type': 'text/html'};
-Router.prototype.pagedata		= "";
-Router.prototype.route			= "";
 
 Router.prototype.specialCaseCheck 	= function(path) {
 	var self 						= this;
@@ -78,24 +94,25 @@ Router.prototype.rest 				= function(request, requestdata){
 
 Router.prototype.default 			= function(request, requestdata) {
 	var self 						= this;
-	var filepath 		= __dirname + '/..' + self.path;
+	var filepath 					= __dirname + '/..' + self.path;
 	
 	sl.get('logger').info("file path", {filepath: filepath});
+	self.headdata['Content-Type'] 	= sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(self.path));
+	self.pageencoding 				= sl.get('transferTypes').getContentEncoding(sl.get('transferTypes').getExt(self.path));
 
-	fs.readFile(filepath, 'utf8', function(err, data){
+	fs.readFile(filepath, self.pageencoding, function(err, data){
 		if (err) {
 			err.code 	= 404;
 			err.message = "Failed to find "+self.path;
 			throw err;
 		}
 		sl.get('logger').info("received page data from file");
-		self.headdata['Content-Type'] = sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(self.path));
 		self.emit('sendmessage', data);
 	});
 }
 
 Router.prototype.handle 			= function(request, requestdata){
-	var self 						= this;
+	var self 		= this;
 	self.parsedUrl	= sl.get('url').parse(request.url, true);
 	self.path     	= self.specialCaseCheck(self.parsedUrl.pathname);
 
@@ -132,7 +149,7 @@ Router.prototype.handle 			= function(request, requestdata){
 
 Router.prototype.getReponseObject 	= function(){
 	var self 						= this;
-	return {'httpcode': self.httpcode, 'headdata': self.headdata, 'pagedata': self.pagedata};
+	return {'httpcode': self.httpcode, 'headdata': self.headdata, 'pagedata': self.pagedata, 'encoding': self.pageencoding};
 }
 
 var route 				= function(request, requestdata, callback) {

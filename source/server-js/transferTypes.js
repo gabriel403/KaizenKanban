@@ -1,5 +1,20 @@
 var transferTypes = {}
 
+transferTypes.extEncoding		= {
+	"png" 		: "binary"
+	, "bmp"   	: "binary"
+	, "djv"   	: "binary"
+	, "djvu"  	: "binary"
+	, "gif"   	: "binary"
+	, "ico"   	: "binary"
+	, "jpeg"  	: "binary"
+	, "jpg"   	: "binary"
+	, "svg"   	: "binary"
+	, "svgz"  	: "binary"
+	, "tif"   	: "binary"
+	, "tiff"  	: "binary"
+}
+
 transferTypes.extTypes 			= { 
 	"3gp"   	: "video/3gpp"
 	, "a"     	: "application/octet-stream"
@@ -177,5 +192,10 @@ transferTypes.getContentType 	= function (ext) {
     return transferTypes.extTypes[ext.toLowerCase()] || 'application/octet-stream';
 }
 
-exports.getExt 			= transferTypes.getExt;
-exports.getContentType 	= transferTypes.getContentType;
+transferTypes.getContentEncoding= function (ext) {
+    return transferTypes.extEncoding[ext.toLowerCase()] || 'utf8';
+}
+
+exports.getExt 				= transferTypes.getExt;
+exports.getContentType 		= transferTypes.getContentType;
+exports.getContentEncoding 	= transferTypes.getContentEncoding;
