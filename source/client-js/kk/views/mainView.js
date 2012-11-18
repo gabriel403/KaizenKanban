@@ -1,9 +1,9 @@
 define(["dojo/_base/declare", "library/base/mvc/view", "dijit/Dialog", "kk/views/widgets/kanbanBoard/kanbanBoard", 
-    "dijit/form/Button", "kk/views/widgets/newStory/newStory", "kk/views/widgets/menuBar/menuBar", 
+    "dijit/form/Button", "kk/views/widgets/newStory/newStoryDialog", "kk/views/widgets/menuBar/menuBar", 
 	"dojo/dom-style", "dojo/query", "dojo/topic", "dojo/_base/lang", "dojo/_base/array", "dojo/dom", 
     "dojo/dom-class", "dojo/NodeList-traverse"],
     function(declare, baseView, Dialog, kanbanBoard, 
-        Button, newStory, menuBar, 
+        Button, newStoryDialog, menuBar, 
         domStyle, query, topic, lang, array, dom, 
         domClass){
         return declare([baseView], {
@@ -29,10 +29,7 @@ define(["dojo/_base/declare", "library/base/mvc/view", "dijit/Dialog", "kk/views
 
                 new menuBar().placeAt(this.menuBar, 'after').startup();
 
-                this.newStoryDialog = new Dialog({
-                    title: "Add New Story",
-                    content: new newStory({store: this.mainModel.workflowStore})
-                }).placeAt(this.outerContainer);
+                this.newStoryDialog = new newStoryDialog({store: this.mainModel.workflowStore}).placeAt(this.outerContainer);
                 // new newStory({store: this.mainModel.workflowStore}).placeAt('outerContainer');
         	},
             setupFinal         : function(){

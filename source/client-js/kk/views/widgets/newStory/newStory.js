@@ -1,9 +1,9 @@
-define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/ComboBox", "dijit/Dialog", "dijit/form/Button",
+define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/ComboBox", "dijit/form/Button",
 	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/text!./newStory.html", 
-	"dijit/registry", "dijit/form/Form", "dojo/query", "dijit/registry" ],
-	function(declare, ValidationTextBox, ComboBox, Dialog, Button,
+	"dijit/form/Form" ],
+	function(declare, ValidationTextBox, ComboBox, Button,
 		_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
-		registry, Form, query, registry){
+		Form){
 		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			baseClass			: "newStoryCardWidget",
 			templateString		: template,
@@ -14,11 +14,13 @@ define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/Combo
 			store				: null,
 			newStoryForm		: null,
 			postCreate			: function(){
-				this.workflowCmbBx.store	= this.store
+				this.workflowCmbBx.store	= this.store;
 				// this.store  = this.parentView.mainModel.workflowStore;
 			},
 			newStoryValidation	: function() {
 				console.log(newStoryForm.validate());
+			},
+			cancel	: function(e) {
 			}
 		});
 });
