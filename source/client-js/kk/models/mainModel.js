@@ -22,7 +22,7 @@ define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
                 this.storiesStore.get(node).then(
                     lang.hitch(this, function(storenode) {
                         storenode.workflow = target;
-                        console.log(storenode);
+                        // console.log(storenode);
                         this.storiesStore.put(storenode);                        
                     })
                 );

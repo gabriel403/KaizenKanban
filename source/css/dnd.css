@@ -51,7 +51,9 @@ body, table#outerContainer, tr.innerContainer  {
 .columnToggler {
 }
 .columnContainer {
-    padding-left: 0px;
+    /*padding-left: 0px;*/
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .minimisedSource .columnHider, .openedSource .columnShower {
     font-size: 2em;
@@ -76,10 +78,23 @@ body, table#outerContainer, tr.innerContainer  {
 
 .openedSource .kkcard {
     display: block;
+
+    background-color: #EEE;
+    vertical-align: baseline;
+
+    /*background-color: #ededed;*/
+
+    border: 2px #CCC solid;
+
+    height: 90%;
+    margin-bottom: 3px;
+
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 
 .openedSource {
-    padding-left: 15px;
 }
 
 .hideme {
@@ -135,16 +150,9 @@ h1 {
 }
 .dojoDndItem, .dojoDndItemAnchor {
     padding: 0px;
-    margin-bottom: 3px;
     height: 100px;
-    background-color: #EEE;
-    vertical-align: baseline;
     font-size: 1.2em;
-    border: 2px #CCC solid;
-
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+    cursor: default;
 }
 
 .dojoDndHandle {
@@ -155,7 +163,6 @@ h1 {
 .column {
     /*padding-top: 15px;*/
     /*padding-left: 15px;*/
-    padding-right: 15px;
     border-top: 2px #B0B0B0 solid;
     border-bottom: 2px #B0B0B0 solid;
     border-right: 1px #B0B0B0 dotted;
@@ -225,8 +232,6 @@ ol, ul {
 }
 
 .dojoDndItemOver {
-    background-color: #ededed;
-    cursor: default;
 }
 
 .dojoDndItemSelected {

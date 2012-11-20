@@ -16,6 +16,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 			movingNodes:        [],
 			kbcs:               [],
 			moveStart:          function(source, nodes, copy){
+				this.originSource = source;
 				this.movingNodes = nodes;
 				this.movingNodes.forEach(function(node){
 					query('.itemImg', node).style('visibility', 'hidden');
@@ -24,6 +25,18 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 
 				query('.dojoDndAvatar').style('width', nodes.style('width')+'px');
 				query('.dojoDndAvatar').style('height', nodes.style('height')+'px');
+
+				this.movingNodes.forEach(function(node){
+					if ( !this.originalNodes[node.id] ) {
+						if ( null != node.previousSibling ) {
+							this.originalNodes[node.id] = {sibling: node.previousSibling, position: 'after'};
+						} else if ( null != node.nextSibling ) {
+							this.originalNodes[node.id] = {sibling: node.nextSibling, position: 'before'};
+						} else {
+							this.originalNodes[node.id] = {sibling: node.parentNode, position: 'first'};
+						}
+					}
+				}, this);
 			},
 			moveCancel: function(source, nodes, copy, target){
 				this.movingNodes.forEach(function(node){
@@ -45,9 +58,6 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 				if ( typeof nodes == "undefined" ) {
 					return;
 				}
-
-				// console.log(source.node.id);
-				// console.log(target.node.id);
 				nodes.forEach(
 					function(node){
 						topic.publish("/kk/dndUpdateStore", source.node.id, target.node.id, domAttr.get(node, 'dnddata'));
@@ -55,34 +65,50 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 				});
 				topic.publish("/kk/nodemoved");
 			},
-			moveOver:           function(before){
-				var beforeAfterNodes    = before?query('.dojoDndItemBefore'):query('.dojoDndItemAfter');
-				var position            = before?'before':'after';
-
-				if ( 0 == this.movingNodes.length || 0 == beforeAfterNodes.length ) {
+			moveOver: function(source){
+				if ( null == source ) {
+					console.log(this.originSource.checkAcceptance(this.originSource, this.movingNodes));
+					this.movingNodes.forEach(function(node){
+						domConstruct.place(node, this.originalNodes[node.id].sibling, this.originalNodes[node.id].position);
+					}, this);
 					return;
 				}
 
-				var itemOver            = beforeAfterNodes[0];
+				var dndbefore = query('.dojoDndItemBefore');
+				var dndafter = query('.dojoDndItemAfter');
+				var itemOver = null;
+				var position = null;
+				if ( !source.checkAcceptance(this.originSource, this.movingNodes) ) {
+					// console.log('not accepted');
+					//remove and reset
+					return;
+				}
+
+
+				if ( dndbefore.length == 0 && dndafter.length == 0 ) {
+					//insert at bottom of source
+					// console.log('insert at bottom', source.node);
+					itemOver = source.node;
+					position = 'last';
+				} else if ( dndbefore.length > 0 ) {
+					//insert before node into place
+					// console.log('insert before', dndbefore[0]);
+					itemOver = dndbefore[0];
+					position = 'before';
+				} else {
+					//insert after node
+					// console.log('insert after', dndafter[0]);
+					itemOver = dndafter[0];
+					position = 'after';
+				}
 
 				this.movingNodes.forEach(function(node){
-					if ( !this.originalNodes[node.id] ) {
-						if ( null != node.previousSibling ) {
-							this.originalNodes[node.id] = {sibling: node.previousSibling, position: 'after'};
-						} else if ( null != node.nextSibling ) {
-							this.originalNodes[node.id] = {sibling: node.nextSibling, position: 'before'};
-						} else {
-							this.originalNodes[node.id] = {sibling: node.parentNode, position: 'first'};
-						}
+					if ( node == itemOver ) {
+						return;
 					}
-				}, this);
+					domConstruct.place(node, itemOver, position);
+				});
 
-				this.movingNodes.forEach(function(node){domConstruct.place(node, itemOver, position);});                
-			},
-			moveOut:            function(e){
-				if ( 0 == this.movingNodes.length ) {
-					return;
-				}
 			},
 			clickOnCard:        function(e){
 				// query('.dojoDndItem').removeClass('focusedNode');
@@ -98,19 +124,18 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 				// domClass.toggle(focusedNode, "focusedNode");
 			},
 			addCommonListeners: function(source){
-				aspect.after(source.dndSource, '_markTargetAnchor', lang.hitch(this, this.moveOver), true);
-				//aspect.after(source, 'onDraggingOut', lang.hitch(this, this.moveOut), true);
-				// query('.dojoDndItem', source.node).on('click', lang.hitch(this, this.clickOnCard));
-				//topic.subscribe("/dnd/source/over", moveStop);
-
+				aspect.after(source.dndSource, '_markTargetAnchor', lang.hitch(this, this.moveOver, source.dndSource), true);
+				// aspect.after(source.dndSource, '_unmarkTargetAnchor', lang.hitch(this, this.checkBeforeCancel), true);
+				// query('.dojoDndItem', source.dndSource).on('click', lang.hitch(this, this.clickOnCard));
 			},
 			addOnetimeListeners: function(){
 				topic.subscribe("/dnd/start",   lang.hitch(this, this.moveStart));
 				topic.subscribe("/dnd/drop",    lang.hitch(this, this.moveStop));
 				topic.subscribe("/dnd/cancel",  lang.hitch(this, this.moveCancel));
 				// on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
-				//topic.subscribe("/dnd/source/over", moveStop);
+				topic.subscribe("/dnd/source/over", lang.hitch(this, this.moveOver));
 			},
+			//following functions do setup and data retrival
 			postCreate:         function() {
 				this.addOnetimeListeners();
 				var outernode = this.columnNodes;
