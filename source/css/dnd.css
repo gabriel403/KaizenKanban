@@ -1,298 +1,298 @@
 .newStoryCardWidget .dijit {
-    float: right;
+	float: right;
 }
 
 .dijitDialogTitleBar, .dijitDialogPaneContent, .dijitDialog {
-    background: #E7E7E7!important;
-    border: 1px solid #DADADA!important;
+	background: #E7E7E7!important;
+	border: 1px solid #DADADA!important;
 }
 
 .newStoryCardWidget label {
-    float: left;
+	float: left;
 }
 html, body {
-    background: #DDEBEB;
-    min-height: 100%;
-    height: 100%;
+	background: #DDEBEB;
+	min-height: 100%;
+	height: 100%;
 }
 #titleBar {
-    height: 12%;
+	height: 12%;
 }
 .menubar {
-    /*height: 30px;*/
-    /*height: 4%;*/
+	/*height: 30px;*/
+	/*height: 4%;*/
 }
 #outerContainer {
-    height: 84%;
+	height: 84%;
 }
 .dijitDialogUnderlay {
-    background-color: black;
+	background-color: black;
 }
 .dijitDialog {
-    font-size: 1.5em;
-    -webkit-box-shadow: none!important;
+	font-size: 1.5em;
+	-webkit-box-shadow: none!important;
 
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 /*.dijitDialogPaneContent, .dijitDialogTitleBar, .dijitDialog {
-    background-color: #ABC0FF!important;
+	background-color: #ABC0FF!important;
 }*/
 /*html, body, table#outerContainer, tr.innerContainer  {
-    min-height: 100%;
+	min-height: 100%;
 }
 body, table#outerContainer, tr.innerContainer  {
-    height: 100%;
+	height: 100%;
 }*/
 .innerContainer {
-    overflow: auto;
+	overflow: auto;
 }
 .columnToggler {
 }
 .columnContainer {
-    /*padding-left: 0px;*/
-    padding-left: 15px;
-    padding-right: 15px;
+	/*padding-left: 0px;*/
+	padding-left: 15px;
+	padding-right: 15px;
 }
 .minimisedSource .columnHider, .openedSource .columnShower {
-    font-size: 2em;
-    display: none;
+	font-size: 2em;
+	display: none;
 }
 
 .openedSource .columnHider {
-    font-size: 2em;
-    display: inline-block;
-    vertical-align: sub;
+	font-size: 2em;
+	display: inline-block;
+	vertical-align: sub;
 }
 
 .minimisedSource .columnShower {
-    font-size: 1.2em;
-    display: inline-block;
-    vertical-align: baseline;
+	font-size: 1.2em;
+	display: inline-block;
+	vertical-align: baseline;
 }
 
 .minimisedSource .kkcard {
-    display: none;
+	display: none;
 }
 
 .openedSource .kkcard {
-    display: block;
+	display: block;
 
-    background-color: #EEE;
-    vertical-align: baseline;
+	background-color: #EEE;
+	vertical-align: baseline;
 
-    /*background-color: #ededed;*/
+	/*background-color: #ededed;*/
 
-    border: 2px #CCC solid;
+	border: 2px #CCC solid;
 
-    height: 90%;
-    margin-bottom: 3px;
+	height: 90%;
+	margin-bottom: 3px;
 
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 
 .openedSource {
 }
 
 .hideme {
-    display: none;
+	display: none;
 }
 .menubar {
-    /*width: 100%;*/
-    background-color: black;
-    color: white;
-    /*font-size: 1.2em;*/
+	/*width: 100%;*/
+	background-color: black;
+	color: white;
+	/*font-size: 1.2em;*/
 }
 
 .menubar .dijitMenuItem {
-    color: white;
+	color: white;
 }
 
 .menubar .dijitMenuItemHover, .menubar .dijitMenuItemSelected {
-    background-color: white;
-    color: black;
+	background-color: white;
+	color: black;
 }
 
 body {
-    font-family: "Tahoma","Arial","Verdana",sans-serif;
-    font-size: 62.5%;
-    width: 100%;
-    /*padding: 15px 0px 15px 0px;*/
-    margin: 0px;
+	font-family: "Tahoma","Arial","Verdana",sans-serif;
+	font-size: 62.5%;
+	width: 100%;
+	/*padding: 15px 0px 15px 0px;*/
+	margin: 0px;
 }
 
 h1 {
-    font-size: 2em;
-    display: inline-block;
+	font-size: 2em;
+	display: inline-block;
 }
 .minimisedSource h1 {
 /*    color:#333;
-    border:0px solid red;*/
-    writing-mode:tb-rl;
-    -webkit-transform:rotate(90deg);
-    -moz-transform:rotate(90deg);
-    -o-transform: rotate(90deg);
-    white-space:nowrap;
-    display:block;
+	border:0px solid red;*/
+	writing-mode:tb-rl;
+	-webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-o-transform: rotate(90deg);
+	white-space:nowrap;
+	display:block;
 /*    bottom:0px;
-    width:20px;
-    height:20px;
-    font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    font-size:24px;
-    font-weight:normal;
-    text-shadow: 0px 0px 1px #333;*/
+	width:20px;
+	height:20px;
+	font-family: 'Trebuchet MS', Helvetica, sans-serif;
+	font-size:24px;
+	font-weight:normal;
+	text-shadow: 0px 0px 1px #333;*/
 }
 .clickable {
-    cursor: pointer;
+	cursor: pointer;
 }
 .dojoDndItem, .dojoDndItemAnchor {
-    padding: 0px;
-    height: 100px;
-    font-size: 1.2em;
-    cursor: default;
+	padding: 0px;
+	height: 100px;
+	font-size: 1.2em;
+	cursor: default;
 }
 
 .dojoDndHandle {
-    background-color: #DDD;
-    border-color: #CCC;
+	background-color: #DDD;
+	border-color: #CCC;
 }
 
 .column {
-    /*padding-top: 15px;*/
-    /*padding-left: 15px;*/
-    border-top: 2px #B0B0B0 solid;
-    border-bottom: 2px #B0B0B0 solid;
-    border-right: 1px #B0B0B0 dotted;
-    border-left: 1px #B0B0B0 dotted;
-    vertical-align: initial;
+	/*padding-top: 15px;*/
+	/*padding-left: 15px;*/
+	border-top: 2px #B0B0B0 solid;
+	border-bottom: 2px #B0B0B0 solid;
+	border-right: 1px #B0B0B0 dotted;
+	border-left: 1px #B0B0B0 dotted;
+	vertical-align: initial;
 }
 
 .minimisedSource {
-    background-color: #DEDEDE;
-    width: 20px;
-    padding-left: 10px;
-    padding-right: 5px;
+	background-color: #DEDEDE;
+	width: 20px;
+	padding-left: 10px;
+	padding-right: 5px;
 }
 
 table {
-    table-layout: fixed;
-    border-collapse: collapse;
-    border-spacing: 0;
+	table-layout: fixed;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 #outerContainer {
-    width: 100%;
-    overflow: auto;
+	width: 100%;
+	overflow: auto;
 }
 
 ol, ul {
-    list-style: none;
+	list-style: none;
 }
 
 .card_id_block {
-    width: 50px;
-    display: inline-block;
+	width: 50px;
+	display: inline-block;
 }
 
 .card_name_block {
-    display: inline-block;
+	display: inline-block;
 }
 
 .card_title {
-    padding: 0px 10px 0px 10px;
-    line-height: 25px;
-    font-size: 1em;
+	padding: 0px 10px 0px 10px;
+	line-height: 25px;
+	font-size: 1em;
 }
 
 .itemText {
-    padding: 5px;
+	padding: 5px;
 }
 
 .bold {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .float_left {
-    float: left;
+	float: left;
 }
 
 .float_right {
-    float: right;
+	float: right;
 }
 
 .overflow_hidden {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .overflow_auto {
-    overflow: auto;
+	overflow: auto;
 }
 
 .dojoDndItemOver {
 }
 
 .dojoDndItemSelected {
-    background-color: #5bbdea; color: #444;
+	background-color: #5bbdea; color: #444;
 }
 
 .dojoDndItemOver .dojoDndItemSelected {
-    background-color: #ededed;
+	background-color: #ededed;
 }
 
 .dojoDndItemOver .dojoDndItemAnchor {
-    background-color: #ededed;
+	background-color: #ededed;
 }
 
 .dojoDndItemBefore, .dojoDndItemBefore > td {
-    border-top: 2px solid #369;
+	border-top: 2px solid #369;
 }
 
 .dojoDndItemAfter, .dojoDndItemAfter > td {
-    border-bottom: 2px solid #369;
+	border-bottom: 2px solid #369;
 }
 
 .dojoDndAvatar {
-    border:2px solid #ccc;
+	border:2px solid #ccc;
 }
 
 .dojoDndAvatarHeader {
-    background-color: #aaa;
+	background-color: #aaa;
 }
 
 .dojoDndAvatarItem {
-    background-color: #fff;
-    border-bottom:1px solid #666;
+	background-color: #fff;
+	border-bottom:1px solid #666;
 }
 
 .dojoDndAvatarItem .itemText {
-    font-size: 120%;
+	font-size: 120%;
 }
 
 .clear_both {
-    clear: both;
+	clear: both;
 }
 
 .dojoDndHandle {
-    border-bottom: 1px black solid;
+	border-bottom: 1px black solid;
 }
 
 .verticalText {
-    color:#333;
-    border:0px solid red;
-    writing-mode:tb-rl;
-    -webkit-transform:rotate(90deg);
-    -moz-transform:rotate(90deg);
-    -o-transform: rotate(90deg);
-    white-space:nowrap;
-    display:block;
-    bottom:0;
-    width:20px;
-    height:20px;
-    font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
-    font-size:24px;
-    font-weight:normal;
-    text-shadow: 0px 0px 1px #333;
+	color:#333;
+	border:0px solid red;
+	writing-mode:tb-rl;
+	-webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-o-transform: rotate(90deg);
+	white-space:nowrap;
+	display:block;
+	bottom:0;
+	width:20px;
+	height:20px;
+	font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
+	font-size:24px;
+	font-weight:normal;
+	text-shadow: 0px 0px 1px #333;
 }
