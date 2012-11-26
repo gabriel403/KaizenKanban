@@ -18,13 +18,14 @@ html, body {
 }
 #titleBar {
 	height: 48px;
+	/*overflow: hidden;*/
 }
 
 #titleBar .trashSource ul {
 /*	height: 100%;
 	width: 100%;*/
-	min-height: 48px;
-	min-width: 48px;
+	height: 48px;
+	width: 48px;
 }
 #titleBar .trashSource {
 	background-image: url('/images/trashicon.png');
@@ -46,6 +47,7 @@ html, body {
 	border: 1px #DADADA solid;
 	height: 20px;
 	display: none;
+	width: 100%;
 }
 #titleBar .trashSource ul.kkcards {
 	background-color: #EEE;

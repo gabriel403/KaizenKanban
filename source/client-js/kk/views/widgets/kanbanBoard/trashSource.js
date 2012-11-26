@@ -1,8 +1,10 @@
 define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string", "dojo/dom-construct", "dojo/query",
-	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom-class", "dojo/dom", "dojo/dom-style",
+	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom-class", "dojo/dom",
+	"dojo/dom-style", "dojo/dom-geometry", "dojo/_base/event",
 	"dojo/text!./trashSource.html", "dijit/Dialog", "dojo/query", "dojo/dnd/Moveable", "dojo/text!./kanbanCard.html" ],
 	function(declare, Source, lang, stringUtil, domConstruct, query,
-	 _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, domClass, dom, domStyle,
+	 _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, domClass, dom, 
+	 domStyle, domGeom, Event,
 	 trashSourceTemplate, Dialog, query, Moveable, kbCard){
 		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			templateString  : trashSourceTemplate,
@@ -12,6 +14,7 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 			baseClass		: "trashSource",
 			workflowstepsStore: {},
 			kanbancardsStore:   {},
+			shown: false,
 			cardCreator     : function(item, hint){
 				var node = domConstruct.toDom(
 					stringUtil.substitute(
@@ -34,17 +37,57 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 					function(stories){
 						this.dndSource.insertNodes(false, stories);
 					}));
+				new Moveable(this.trashMoveable);
+
+    //     		var domNodeInfo = domGeom.position(this.domNode, true);
+				// domStyle.set(this.trashSourceList, {
+			 //      	width: domNodeInfo.w+"px"
+			 //    });
 				return this.dndSource;
 			},
-			onCancel: function(){
+			onCancel: function(e){
+				Event.stop(e);
 				query('.dojoDndItem', this.domNode).style('display', 'none');
 				query('.handle', this.domNode).style('display', 'none');
+				this.shown = false;
+
+        		var trashDialogInfo = domGeom.position(this.domNode, true);
+				domStyle.set(this.trashMoveable, {
+			      	left: trashDialogInfo.x + "px",
+			      	top: trashDialogInfo.y + "px",
+			      	position: "relative"
+			    });
+				domStyle.set(this.trashSourceList, {
+			      	width: trashDialogInfo.w+"px"
+			    });
 
 			},
-			toggler			: function(){
+			toggler			: function(e){
 				// this.trashDialog.show();
+				if ( this.shown ) {
+					this.onCancel(e);
+					return;
+				}
+
+				this.shown = true;
 				query('.dojoDndItem', this.domNode).style('display', 'block');
 				query('.handle', this.domNode).style('display', 'block');
+
+				var divInfo = domGeom.position(dojo.body(), true);
+        		var trashDialogInfo = domGeom.position(this.trashMoveable, true);
+    			// var lastX = divInfo.x - trashDialogInfo.x + (divInfo.w - trashDialogInfo.w) / 2;
+    			// var lastY = divInfo.y - trashDialogInfo.y + (divInfo.h - trashDialogInfo.h) / 2;
+    			var lastX = (divInfo.w - trashDialogInfo.w) / 2;
+    			var lastY = (divInfo.h - trashDialogInfo.h) / 2;
+
+				domStyle.set(this.trashMoveable, {
+			      	position: "absolute",
+			      	left: parseInt(lastX) + "px",
+			      	top: parseInt(lastY) + "px"
+			    });
+				domStyle.set(this.trashSourceList, {
+			      	width: "auto"
+			    });
 			}
 		});
 });

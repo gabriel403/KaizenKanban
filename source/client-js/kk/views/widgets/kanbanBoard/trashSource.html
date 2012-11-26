@@ -1,8 +1,10 @@
-<td  class="${baseClass}" data-dojo-attach-event="onclick:toggler">
-	<div data-dojo-type="dojo/dnd/Moveable" data-dojo-attach-point="trashDialog" class="${baseClass}Moveable">
+<td class="${baseClass}" data-dojo-attach-event="onclick:toggler">
+	<div class="${baseClass}Moveable" data-dojo-attach-point="trashMoveable">
 		<div class="handle">
 			Trash
-			<span data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon dijitDialogCloseIconHover dijitDialogCloseIconActive" data-dojo-attach-event="onclick: onCancel" title="Cancel" role="button" tabindex="-1">
+			<span data-dojo-attach-point="closeButtonNode"
+			 class="dijitDialogCloseIcon dijitDialogCloseIconHover dijitDialogCloseIconActive"
+			 data-dojo-attach-event="onclick: onCancel" title="Cancel" role="button" tabindex="-1">
 			</span>
 		</div>
 		<ul data-dojo-attach-point="trashSourceList" id="trash"></ul>
