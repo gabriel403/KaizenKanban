@@ -65,9 +65,38 @@ KanbanController.prototype.PUT 				= function(options, payload) {
 }
 
 KanbanController.prototype.POST 			= function(options, payload) {
-	var err = new Error("Not yet implemented.");
-	err.code = 501;
-	throw err;
+	// var err = new Error("Not yet implemented.");
+	// err.code = 501;
+	// throw err;
+
+	if ( 'undefined' == typeof payload ) {
+		var err = new Error("No payload.");
+		err.code = 400;
+		throw err;
+	}
+
+	var jsonutil 	= sl.get('jsonutil');
+
+	var self 		= this;
+	self.payload 	= jsonutil.parse(payload);
+	self.prepareData(options);
+
+	self.readJsonFile(function(err, data){
+		var self 	= this;
+		data 		= jsonutil.parse(data);
+		self.payload.id = ++data.length;
+		console.log(data);
+		var pop = data.pop();
+		if ( pop != null)
+			data.push(pop);
+		data.push(self.payload);
+		console.log(data);
+		data 		= jsonutil.stringify(data);
+		self.writeJsonFile(data, function(err){
+			var self = this;
+			self.emit('sendmessage', jsonutil.stringify(self.payload));
+		});
+	});
 }
 
 KanbanController.prototype.DELETE 			= function(options, payload) {
@@ -102,15 +131,15 @@ KanbanController.prototype.readJsonFile 	= function(callback) {
    	});
 }
 
-KanbanController.prototype.writeJsonFile 	= function(callback) {
-	var self = this;
-	fs.readFile(self.storiesfile, 'utf8', function(err, data) {
-		if (err) throw err;
-		sl.get('logger').info("json file received");
-		callback.apply(self, [null, data]);
-   		// callback(null, data);
-   	});
-}
+// KanbanController.prototype.writeJsonFile 	= function(callback) {
+// 	var self = this;
+// 	fs.readFile(self.storiesfile, 'utf8', function(err, data) {
+// 		if (err) throw err;
+// 		sl.get('logger').info("json file received");
+// 		callback.apply(self, [null, data]);
+//    		// callback(null, data);
+//    	});
+// }
 KanbanController.prototype.writeJsonFile 	= function(data, callback) {
 	var self = this;
 	fs.writeFile(self.storiesfile, data, 'utf8', function (err) {

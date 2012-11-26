@@ -1,21 +1,21 @@
 <div class="${baseClass}">
-	<div data-dojo-type="dijit/form/Form" id="newStoryForm" data-dojo-attach-point="newStoryForm" data-dojo-id="newStoryForm" encType="multipart/form-data">
+	<div data-dojo-type="dijit/form/Form" id="newStoryForm" data-dojo-attach-point="newStoryForm" data-dojo-id="newStoryForm" encType="multipart/form-data" data-dojo-attach-event="onSubmit:newStoryValidation">
 		<div class="overflow_auto">
-			<label for"storynameIpt">Story name: </label>
-			<input name="storynameIpt" id="storynameIpt" required="true" data-dojo-attach-point="storynameIpt" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="placeHolder: 'Name your story'" type="text" />
+			<label for"name">Story name: </label>
+			<input name="name" required="true" data-dojo-attach-point="storynameIpt" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="placeHolder: 'Name your story'" type="text" />
 		</div>
 		<br />
 		<div class="overflow_auto">
-			<label for"storydescIpt">Story description: </label>
-			<input name="storydescIpt" id="storydescIpt" required="true" data-dojo-attach-point="storydescIpt" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="placeHolder: 'Describe your story'" type="text" />
+			<label for"description">Story description: </label>
+			<input name="description" required="true" data-dojo-attach-point="storydescIpt" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="placeHolder: 'Describe your story'" type="text" />
 		</div>
 		<br />
 		<div class="overflow_auto">
-			<label for"workflowCmbBx">Select a workflow:</label>
-			<input name="workflowCmbBx" id="workflowCmbBx" required="true" data-dojo-attach-point="workflowCmbBx" data-dojo-type="dijit/form/ComboBox" data-dojo-props="searchAttr:'title'" />
+			<label for"workflow">Select a workflow:</label>
+			<input name="workflow" required="true" data-dojo-attach-point="workflowCmbBx" data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="searchAttr:'title'" />
 		</div>
 		<div class="dijitDialogPaneActionBar">
-			<button data-dojo-type="dijit/form/Button" type="submit" data-dojo-attach-event="onClick:newStoryValidation">
+			<button data-dojo-type="dijit/form/Button" type="submit">
 				OK
 			</button>
 			<button data-dojo-type="dijit/form/Button" type="button" data-dojo-attach-event="onClick:cancel">

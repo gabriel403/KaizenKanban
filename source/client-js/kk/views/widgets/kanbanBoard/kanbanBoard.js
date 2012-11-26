@@ -14,7 +14,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 			kanbancardsStore:   {},
 			originalNodes:		{},
 			movingNodes:        [],
-			kbcs:               [],
+			kbcs:               {},
 			moveStart:          function(source, nodes, copy){
 				this.originSource = source;
 				this.movingNodes = nodes;
@@ -47,8 +47,6 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 
 				this.movingNodes 	= [];
 				this.originalNodes 	= {};
-				// this.moveStop(source, nodes, copy, target);
-
 			},
 			moveStop:           function(source, nodes, copy, target){
 				this.movingNodes.forEach(function(node){query('div', node).style('visibility', 'visible');});
@@ -61,13 +59,11 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 				nodes.forEach(
 					function(node){
 						topic.publish("/kk/dndUpdateStore", source.node.id, target.node.id, domAttr.get(node, 'dnddata'));
-						// console.log(domAttr.get(node, 'dnddata'));
 				});
 				topic.publish("/kk/nodemoved");
 			},
 			moveOver: function(source){
 				if ( null == source ) {
-					console.log(this.originSource.checkAcceptance(this.originSource, this.movingNodes));
 					this.movingNodes.forEach(function(node){
 						domConstruct.place(node, this.originalNodes[node.id].sibling, this.originalNodes[node.id].position);
 					}, this);
@@ -134,6 +130,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 				topic.subscribe("/dnd/cancel",  lang.hitch(this, this.moveCancel));
 				// on(win.body(), 'click', lang.hitch(this, this.clickOnCard));
 				topic.subscribe("/dnd/source/over", lang.hitch(this, this.moveOver));
+				// topic.subscribe("/kk/dndNewStory", lang.hitch(this, this.newNode));
 			},
 			//following functions do setup and data retrival
 			postCreate:         function() {
@@ -146,8 +143,9 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 					function(item, index, workflowarray){
 						var itemid      = item.id;
 						var kbcSource   = new kanbanColumn({item: item});
-						this.kbcs.push(kbcSource);
-						kbcSource.placeAt(this.columnNodes)
+						this.kbcs[itemid] = kbcSource;
+						kbcSource.placeAt(this.columnNodes);
+						this.addCommonListeners(kbcSource);
 						this.kanbancardsStore.query({workflow: itemid}).then(lang.hitch(this, this.processCards, kbcSource));
 					}, 
 				this);
@@ -155,11 +153,10 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 			},
 			processCards: function(kbcSource, cards) {
 				kbcSource.dndSource.insertNodes(false, cards);
-				this.addCommonListeners(kbcSource);
 				topic.publish('/kk/finishedkanban');
-				this.processOrderPlaceWorkflows();
 			},
-			processOrderPlaceWorkflows: function() {
+			newNode: function(card) {
+				this.kbcs[card.workflow].dndSource.insertNodes(false, [card]);
 			}
 		});
 });

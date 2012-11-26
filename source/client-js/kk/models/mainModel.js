@@ -1,6 +1,6 @@
-define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
+define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang", "dojo/when",
 	"library/factories/store" ],
-	function(declare, json, topic, lang,
+	function(declare, json, topic, lang, when,
 	 storeFactory, 
 	 workflowJson){
 		return declare([ ], {
@@ -11,21 +11,28 @@ define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang",
 				this.init();
 			},
 			init			: function(){
-				this.workflowStore 	= storeFactory.getInstance("/workflow/", 'id');
-				this.storiesStore 	= storeFactory.getInstance("/stories/", 'id');
+				this.workflowStore 	= storeFactory.getInstance("/workflow/", 'id', 'jsonCache');
+				this.storiesStore 	= storeFactory.getInstance("/stories/", 'id', 'jsonCache');
 				this.setupConnections();
 			},
 			setupConnections: function(){
-				topic.subscribe("/kk/dndUpdateStore", lang.hitch(this, this.updatestores));
+				topic.subscribe("/kk/dndUpdateStore", 	lang.hitch(this, this.updateStores));
+				topic.subscribe("/kk/newStory", 		lang.hitch(this, this.newStory));
 			},
-			updatestores	: function(source, target, node){
-				this.storiesStore.get(node).then(
-					lang.hitch(this, function(storenode) {
-						storenode.workflow = target;
-						// console.log(storenode);
-						this.storiesStore.put(storenode);                        
+			newStory: function(story){
+				when(this.storiesStore.put(story), function(returnVal){
+					console.log(returnVal);
+					topic.publish("/kk/dndNewStory", returnVal);
+				});
+			},
+			updateStores	: function(sourceId, targetId, storyId){
+				when(this.storiesStore.get(storyId),
+					lang.hitch(this, function(story) {
+						story.workflow = targetId;
+						when(this.storiesStore.put(story),function(returnVal){console.log(returnVal);});
 					})
 				);
+
 			}
 		});
 });

@@ -1,26 +1,44 @@
-define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/ComboBox", "dijit/form/Button",
+define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/FilteringSelect", "dijit/form/Button",
 	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/text!./newStory.html", 
-	"dijit/form/Form" ],
-	function(declare, ValidationTextBox, ComboBox, Button,
+	"dijit/form/Form", "dojo/_base/event", "dojo/Evented" ],
+	function(declare, ValidationTextBox, FilteringSelect, Button,
 		_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
-		Form){
-		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+		Form, event, Evented){
+		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
 			baseClass			: "newStoryCardWidget",
 			templateString		: template,
-			parentView			: null,
+
 			storynameIpt		: null,
 			storydescIpt		: null,
 			workflowCmbBx		: null,
+
 			store				: null,
 			newStoryForm		: null,
+
+			setStore 			: function(store){
+				this.store = store;
+				this.workflowCmbBx.store	= this.store;
+			},
+
 			postCreate			: function(){
 				this.workflowCmbBx.store	= this.store;
 				// this.store  = this.parentView.mainModel.workflowStore;
 			},
-			newStoryValidation	: function() {
-				console.log(newStoryForm.validate());
+			newStoryValidation	: function(e) {
+				///?storynameIpt=My+New+Story&storydescIpt=My+Story+Description&workflowCmbBx=Awaiting+Development
+				event.stop(e);
+				if(newStoryForm.validate()) {
+					this.submit();
+				}
+			},
+			getFormObject 		: function(){
+				return this.newStoryForm.get('value');
+			},
+			submit: function(){
+				this.emit('submit', this.getFormObject());
 			},
 			cancel	: function(e) {
+				this.emit('cancel', e);
 			}
 		});
 });

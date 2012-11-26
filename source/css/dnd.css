@@ -14,10 +14,57 @@ html, body {
 	background: #DDEBEB;
 	min-height: 100%;
 	height: 100%;
+	overflow-x: hidden;
 }
 #titleBar {
-	height: 12%;
+	height: 48px;
 }
+
+#titleBar .trashSource ul {
+/*	height: 100%;
+	width: 100%;*/
+	min-height: 48px;
+	min-width: 48px;
+}
+#titleBar .trashSource {
+	background-image: url('/images/trashicon.png');
+	cursor: pointer;
+	background-repeat:no-repeat;
+	float: right;
+	min-height: 48px;
+	min-width: 48px;
+}
+#titleBar .trashSourceMoveable {
+
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border: 1px #DADADA solid;
+}
+#titleBar .trashSourceMoveable .handle {
+	background-color: #DDEBEB;
+	border: 1px #DADADA solid;
+	height: 20px;
+	display: none;
+}
+#titleBar .trashSource ul.kkcards {
+	background-color: #EEE;
+}
+#titleBar .trashSourceMoveable {
+	/*padding-top: 20px;*/
+}
+#titleBar .trashSource ul .dojoDndItem {
+	display: none;
+	width: 200px;
+}
+#titleBar .dojoMoveItem {
+	/*width: 5%;*/
+}
+#titleBar .trashSourceList {
+	width: 100%;
+	height: 100%;
+}
+
 .menubar {
 	/*height: 30px;*/
 	/*height: 4%;*/
@@ -76,7 +123,7 @@ body, table#outerContainer, tr.innerContainer  {
 	display: none;
 }
 
-.openedSource .kkcard {
+.openedSource .kkcard, #trash .kkcard {
 	display: block;
 
 	background-color: #EEE;
@@ -94,6 +141,9 @@ body, table#outerContainer, tr.innerContainer  {
 	-webkit-border-radius: 4px;
 }
 
+#trash .kkcard {
+	height: 96%;
+}
 .openedSource {
 }
 
@@ -168,6 +218,7 @@ h1 {
 	border-right: 1px #B0B0B0 dotted;
 	border-left: 1px #B0B0B0 dotted;
 	vertical-align: initial;
+	height: 100%;
 }
 
 .minimisedSource {
