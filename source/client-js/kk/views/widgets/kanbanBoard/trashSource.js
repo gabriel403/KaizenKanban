@@ -1,11 +1,13 @@
 define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string", "dojo/dom-construct", "dojo/query",
 	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom-class", "dojo/dom",
 	"dojo/dom-style", "dojo/dom-geometry", "dojo/_base/event",
-	"dojo/text!./trashSource.html", "dijit/Dialog", "dojo/query", "dojo/dnd/Moveable", "dojo/text!./kanbanCard.html" ],
+	"dojo/text!./trashSource.html", "dijit/Dialog", "dojo/query", "dojo/dnd/Moveable", "dojo/text!./kanbanCard.html",
+	"dijit/DialogUnderlay", "dojo/_base/window" ],
 	function(declare, Source, lang, stringUtil, domConstruct, query,
 	 _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, domClass, dom, 
 	 domStyle, domGeom, Event,
-	 trashSourceTemplate, Dialog, query, Moveable, kbCard){
+	 trashSourceTemplate, Dialog, query, Moveable, kbCard,
+	 DialogUnderlay, win){
 		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			templateString  : trashSourceTemplate,
 			copyOnly        : false,
@@ -55,11 +57,17 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 				domStyle.set(this.trashMoveable, {
 			      	left: trashDialogInfo.x + "px",
 			      	top: trashDialogInfo.y + "px",
-			      	position: "relative"
+			      	minWidth: "0px",
+			      	width: "auto"//,
+			      	// position: "relative"
 			    });
 				domStyle.set(this.trashSourceList, {
-			      	width: trashDialogInfo.w+"px"
+			      	width: trashDialogInfo.w+"px",
+			      	border: "0px",
+			      	height: "48px"
 			    });
+			    query(".handle", this.trashMoveable)
+			    .style('border', '0px')
 
 			},
 			toggler			: function(e){
@@ -83,11 +91,25 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 				domStyle.set(this.trashMoveable, {
 			      	position: "absolute",
 			      	left: parseInt(lastX) + "px",
-			      	top: parseInt(lastY) + "px"
-			    });
-				domStyle.set(this.trashSourceList, {
+			      	top: parseInt(lastY) + "px",
+			      	minWidth: "200px",
 			      	width: "auto"
 			    });
+				domStyle.set(this.trashSourceList, {
+			      	width: "100%",
+			      	border: "1px solid black",
+			      	height: "auto"
+			    });
+			    query(".handle", this.trashMoveable)
+			    .style('border', '1px solid black')
+			    .style('fontSize', '1.4em')
+			    .style('verticalAlign', 'text-bottom');
+			    query("li", this.trashSourceList).style('width', '100%');
+			    //div.handle
+			    //ul#trash
+			    //ul#trash li
+			    // var diu = new DialogUnderlay().placeAt(win.body());
+			    // diu.show();
 			}
 		});
 });

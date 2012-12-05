@@ -20,6 +20,7 @@ define([ "dojo/_base/declare", "dijit/Dialog",
 				this.newStoryDialog.show();
 			},
 			cancel: function(e){
+				this.newStory.enableButtons();
 				this.newStoryDialog.hide();
 			},
 			submit: function(e) {

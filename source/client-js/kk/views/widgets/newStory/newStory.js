@@ -1,9 +1,9 @@
 define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/FilteringSelect", "dijit/form/Button",
 	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/text!./newStory.html", 
-	"dijit/form/Form", "dojo/_base/event", "dojo/Evented" ],
+	"dijit/form/Form", "dojo/_base/event", "dojo/Evented", "dijit/registry" ],
 	function(declare, ValidationTextBox, FilteringSelect, Button,
 		_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
-		Form, event, Evented){
+		Form, event, Evented, registry){
 		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
 			baseClass			: "newStoryCardWidget",
 			templateString		: template,
@@ -35,10 +35,21 @@ define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/Filte
 				return this.newStoryForm.get('value');
 			},
 			submit: function(){
+				this.disableButtons();
 				this.emit('submit', this.getFormObject());
 			},
 			cancel	: function(e) {
 				this.emit('cancel', e);
+			},
+			disableButtons	: function(){
+				registry.findWidgets(this.buttonbar).forEach(function(widget){
+					widget.set('disabled', true);
+				});
+			},
+			enableButtons	: function(){
+				registry.findWidgets(this.buttonbar).forEach(function(widget){
+					widget.set('disabled', false);
+				});
 			}
 		});
 });
