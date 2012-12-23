@@ -21,7 +21,6 @@ define([ "dojo/_base/declare", "dojo/json", "dojo/topic", "dojo/_base/lang", "do
 			},
 			newStory: function(story){
 				when(this.storiesStore.put(story), function(returnVal){
-					console.log(returnVal);
 					topic.publish("/kk/dndNewStory", returnVal);
 				});
 			},

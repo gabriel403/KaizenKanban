@@ -41,75 +41,47 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 					}));
 				new Moveable(this.trashMoveable);
 
-    //     		var domNodeInfo = domGeom.position(this.domNode, true);
-				// domStyle.set(this.trashSourceList, {
-			 //      	width: domNodeInfo.w+"px"
-			 //    });
 				return this.dndSource;
 			},
 			onCancel: function(e){
 				Event.stop(e);
-				query('.dojoDndItem', this.domNode).style('display', 'none');
-				query('.handle', this.domNode).style('display', 'none');
+
+				domClass.toggle(this.trashMoveable, 'minimisedSource');
+				domClass.toggle(this.trashMoveable, 'openedSource');
+
+				domConstruct.place(this.trashMoveable, this.domNode, "last");
 				this.shown = false;
 
-        		var trashDialogInfo = domGeom.position(this.domNode, true);
 				domStyle.set(this.trashMoveable, {
-			      	left: trashDialogInfo.x + "px",
-			      	top: trashDialogInfo.y + "px",
-			      	minWidth: "0px",
-			      	width: "auto"//,
-			      	// position: "relative"
-			    });
-				domStyle.set(this.trashSourceList, {
-			      	width: trashDialogInfo.w+"px",
-			      	border: "0px",
-			      	height: "48px"
-			    });
-			    query(".handle", this.trashMoveable)
-			    .style('border', '0px')
+					left: "auto",
+					top: "auto"
+				});
 
 			},
 			toggler			: function(e){
-				// this.trashDialog.show();
+
 				if ( this.shown ) {
 					this.onCancel(e);
 					return;
 				}
 
+				domClass.toggle(this.trashMoveable, 'minimisedSource');
+				domClass.toggle(this.trashMoveable, 'openedSource');
+
 				this.shown = true;
-				query('.dojoDndItem', this.domNode).style('display', 'block');
-				query('.handle', this.domNode).style('display', 'block');
 
 				var divInfo = domGeom.position(dojo.body(), true);
-        		var trashDialogInfo = domGeom.position(this.trashMoveable, true);
-    			// var lastX = divInfo.x - trashDialogInfo.x + (divInfo.w - trashDialogInfo.w) / 2;
-    			// var lastY = divInfo.y - trashDialogInfo.y + (divInfo.h - trashDialogInfo.h) / 2;
-    			var lastX = (divInfo.w - trashDialogInfo.w) / 2;
-    			var lastY = (divInfo.h - trashDialogInfo.h) / 2;
-
+				var trashDialogInfo = domGeom.position(this.trashMoveable, true);
+				var lastX = (divInfo.w - trashDialogInfo.w) / 2;
+				var lastY = (divInfo.h - trashDialogInfo.h) / 2;
 				domStyle.set(this.trashMoveable, {
-			      	position: "absolute",
-			      	left: parseInt(lastX) + "px",
-			      	top: parseInt(lastY) + "px",
-			      	minWidth: "200px",
-			      	width: "auto"
-			    });
-				domStyle.set(this.trashSourceList, {
-			      	width: "100%",
-			      	border: "1px solid black",
-			      	height: "auto"
-			    });
-			    query(".handle", this.trashMoveable)
-			    .style('border', '1px solid black')
-			    .style('fontSize', '1.4em')
-			    .style('verticalAlign', 'text-bottom');
-			    query("li", this.trashSourceList).style('width', '100%');
-			    //div.handle
-			    //ul#trash
-			    //ul#trash li
-			    // var diu = new DialogUnderlay().placeAt(win.body());
-			    // diu.show();
+					left: parseInt(lastX) + "px",
+					top: parseInt(lastY) + "px"
+				});
+
+				domConstruct.place(this.trashMoveable, win.body(), "last");
+				// var diu = new DialogUnderlay().placeAt(win.body());
+				// diu.show();
 			}
 		});
 });

@@ -34,19 +34,19 @@ define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/Filte
 			getFormObject 		: function(){
 				return this.newStoryForm.get('value');
 			},
-			submit: function(){
+			submit				: function(){
 				this.disableButtons();
 				this.emit('submit', this.getFormObject());
 			},
-			cancel	: function(e) {
+			cancel				: function(e) {
 				this.emit('cancel', e);
 			},
-			disableButtons	: function(){
+			disableButtons		: function(){
 				registry.findWidgets(this.buttonbar).forEach(function(widget){
 					widget.set('disabled', true);
 				});
 			},
-			enableButtons	: function(){
+			enableButtons		: function(){
 				registry.findWidgets(this.buttonbar).forEach(function(widget){
 					widget.set('disabled', false);
 				});

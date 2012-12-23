@@ -11,12 +11,13 @@ define(["dojo/_base/declare", "library/base/mvc/view", "dijit/Dialog", "kk/views
 		return declare([baseView], {
 			mainModel       : null,
 			outerContainer  : 'outerContainer',
-			titleBar         : 'titleBar',
+			titleBar       	: 'titleBar',
 			newStoryDialog  : null,
 			kanbanBoard		: {},
 			construct          : function(props){
 				land.mixin(this, props);
 			},
+			// base methods
 			setupDijits        : function(){
 				this.kanbanBoard = new kanbanBoard({
 					workflowstepsStore	: this.mainModel.workflowStore, 
@@ -25,9 +26,9 @@ define(["dojo/_base/declare", "library/base/mvc/view", "dijit/Dialog", "kk/views
 				new trashSource({
 					workflowstepsStore	: this.mainModel.workflowStore, 
 					kanbancardsStore	: this.mainModel.storiesStore
-				}).placeAt(this.titleBar);
+				}).placeAt(this.titleBar, 'first');
 
-				new menuBar().placeAt(this.titleBar, 'after').startup();
+				// new menuBar().placeAt(this.titleBar, 'after').startup();
 
 				this.newStoryDialog = new newStoryDialog({store: this.mainModel.workflowStore}).placeAt(this.outerContainer);
 			},
@@ -40,6 +41,7 @@ define(["dojo/_base/declare", "library/base/mvc/view", "dijit/Dialog", "kk/views
 				on(this.newStoryDialog, 'submit', 		lang.hitch(this, this.newStory));
 				topic.subscribe("/kk/dndNewStory", lang.hitch(this, this.newNode));
 			},
+			// methods
 			newStory: function(story) {
 				topic.publish('/kk/newStory', story)
 			},
@@ -48,12 +50,12 @@ define(["dojo/_base/declare", "library/base/mvc/view", "dijit/Dialog", "kk/views
 				this.newStoryDialog.cancel();
 			},
 			realignColumns     : function() {
-				query('.columnContainer').style('height', '100%');
+				// query('.columnContainer').style('height', '100%');
 				var maxHeight = 0;
 				query('.columnContainer').forEach(function(item){
 					maxHeight = domStyle.get(item, 'height') > maxHeight?domStyle.get(item, 'height'):maxHeight;
 				});
-				query('.columnContainer').style('height', maxHeight+'px');
+				// query('.columnContainer').style('height', maxHeight+'px');
 			}
 		});
 });

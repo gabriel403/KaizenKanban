@@ -11,8 +11,6 @@ define([ "dojo/_base/declare", "dijit/Dialog",
 			newStoryDialog 		: null,
 			postCreate: function(){
 				this.newStory.setStore(this.store);
-				// this.newStory.newStoryForm.on('cancel', this.newStoryDialog.hide)
-				// aspect.after(this.newStory, 'cancel', lang.hitch(this, this.cancel), true);
 				on(this.newStory, 'cancel', lang.hitch(this, this.cancel));
 				on(this.newStory, 'submit', lang.hitch(this, this.submit));
 			},

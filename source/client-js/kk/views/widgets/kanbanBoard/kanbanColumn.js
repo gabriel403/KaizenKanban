@@ -13,27 +13,13 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 			selfAccept      : true,
 			outernone       : null,
 			minimisedSource : false,
-			// setupDom        : function() {
-			//     var node = domConstruct.toDom(
-			//         stringUtil.substitute(
-			//             this.templateString,
-			//             this.item
-			//         )
-			//     );
-
-			//     domConstruct.place(node, this.outernode);
-			//     return dojo.query(".columnContainer", node)[0];
-			// },
 			cardCreator     : function(item, hint){
-				//var node = new kanbanCard({item: item, id: "cbk_"+item.id});
 				var node = domConstruct.toDom(
 					stringUtil.substitute(
 						this.kbCard,
 						item
 					)
 				);
-				//domConstruct.place(node, this.cardNodes);
-				//node.destroy();
 				return { node: node, data: item };
 			},
 			// creates a dojo/dnd/Source from the data provided
@@ -53,12 +39,6 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 					// autoSync:       true
 					copyState: function(keyPressed, self){ return false; }
 				});
-
-				// this.nodes.forEach(
-				//     function(item,index){
-				//         cards[index2] = new kanbanCard({item: item2});
-				//     });
-				// this.dndSource.insertNodes(false, this.nodes);
 				return this.dndSource;
 			},
 			toggler: function(e) {
