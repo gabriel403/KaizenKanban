@@ -1,3 +1,7 @@
+.dijitMenuItemSelected { 
+	background-color: transparent!important;
+}
+
 .dijitSplitContainer-child, 
 .dijitBorderContainer-child,
 .dijitGutterH {
@@ -26,122 +30,16 @@
 	border: 1px solid #DADADA!important;
 }
 
-.trashSourceMoveable.openedSource .handle, .trashSourceMoveable.openedSource .dojoDndItem {
-	display: block;
-}
-
-.trashSourceMoveable.openedSource {
-	position: absolute;
-	min-width: 200px;
-	width: auto;
-}
-
-.trashSourceMoveable.openedSource #trash {
-	width: 100%;
-	border: 1px solid black;
-	height: auto;
-}
-
-.trashSourceMoveable.openedSource li {
-	width: 100%;
-}
-
-.trashSourceMoveable.openedSource .handle {
-	border: 1px solid black;
-	font-size: 1.4em;
-	vertical-align: text-bottom;
-}
-
-.trashSourceMoveable.minimisedSource .handle, .trashSourceMoveable.minimisedSource .dojoDndItem {
-	display: none;
-}
-
-.trashSourceMoveable.minimisedSource .handle {
-	border: 0px;
-}
-.trashSourceMoveable.minimisedSource {	
-	left: auto;
-	top: auto;
-	min-width: 0px;
-	width: auto;
-	background-color: transparent;
-}
-
-.trashSourceMoveable.minimisedSource #trash {
-	border: 0px;
-	height: 48px;
-	width: 48px;
-}
 
 .newStoryCardWidget label {
 	float: left;
 }
-html, body {
-	background: #DDEBEB;
-	min-height: 100%;
-	height: 100%;
-	width:100%;
-	margin:0; 
-	padding:0; 
-	/*overflow:hidden;*/
-	overflow-x: hidden;
-}
+
 #titleBar {
 	height: 48px;
 	overflow: hidden;
 }
 
-#titleBar .trashSource ul {
-/*	height: 100%;
-	width: 100%;*/
-	height: 48px;
-	width: 48px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-#titleBar .trashSource {
-	position: relative;
-	background-image: url('/images/trashicon.png');
-	cursor: pointer;
-	background-repeat:no-repeat;
-	float: right;
-	min-height: 48px;
-	min-width: 48px;
-}
-#titleBar .trashSourceMoveable {
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	/*border: 1px #DADADA solid;*/
-}
-.trashSourceMoveable .handle {
-	background-color: #DDEBEB;
-	border: 1px #DADADA solid;
-	height: 20px;
-	display: none;
-	width: 100%;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-.trashSource ul.kkcards {
-	background-color: #EEE;
-}
-#titleBar .trashSourceMoveable {
-	/*padding-top: 20px;*/
-}
-#titleBar .trashSource ul .dojoDndItem {
-	display: none;
-	width: 200px;
-}
-#titleBar .dojoMoveItem {
-	/*width: 5%;*/
-}
-#titleBar .trashSourceList {
-	width: 100%;
-	height: 100%;
-}
 
 .menubar {
 	/*height: 30px;*/
@@ -163,15 +61,7 @@ html, body {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
-/*.dijitDialogPaneContent, .dijitDialogTitleBar, .dijitDialog {
-	background-color: #ABC0FF!important;
-}*/
-/*html, body, table#outerContainer, tr.innerContainer  {
-	min-height: 100%;
-}
-body, table#outerContainer, tr.innerContainer  {
-	height: 100%;
-}*/
+
 .innerContainer {
 	overflow: auto;
 	height: 98%;
@@ -209,7 +99,7 @@ body, table#outerContainer, tr.innerContainer  {
 	display: none;
 }
 
-.openedSource .kkcard, #trash .kkcard {
+.openedSource .kkcard {
 	display: block;
 
 	background-color: #EEE;
@@ -227,43 +117,9 @@ body, table#outerContainer, tr.innerContainer  {
 	-webkit-border-radius: 4px;
 }
 
-#trash .kkcard {
-	height: 96%;
-}
 .openedSource {
 }
 
-.hideme {
-	display: none;
-}
-.menubar {
-	/*width: 100%;*/
-	background-color: black;
-	color: white;
-	/*font-size: 1.2em;*/
-}
-
-.menubar .dijitMenuItem {
-	color: white;
-}
-
-.menubar .dijitMenuItemHover, .menubar .dijitMenuItemSelected {
-	background-color: white;
-	color: black;
-}
-
-body {
-	font-family: "Tahoma","Arial","Verdana",sans-serif;
-	font-size: 62.5%;
-	width: 100%;
-	/*padding: 15px 0px 15px 0px;*/
-	margin: 0px;
-}
-
-h1 {
-	font-size: 2em;
-	display: inline-block;
-}
 .minimisedSource h1 {
 /*    color:#333;
 	border:0px solid red;*/
@@ -281,9 +137,7 @@ h1 {
 	font-weight:normal;
 	text-shadow: 0px 0px 1px #333;*/
 }
-.clickable {
-	cursor: pointer;
-}
+
 .dojoDndItem, .dojoDndItemAnchor {
 	padding: 0px;
 	height: 100px;
@@ -315,15 +169,6 @@ h1 {
 	padding-right: 5px;
 }
 
-table {
-	table-layout: fixed;
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-ol, ul {
-	list-style: none;
-}
 
 .card_id_block {
 	width: 50px;
@@ -384,48 +229,6 @@ ol, ul {
 	font-size: 120%;
 }
 
-.clear_both {
-	clear: both;
-}
-
 .dojoDndHandle {
 	border-bottom: 1px black solid;
-}
-
-.verticalText {
-	color:#333;
-	border:0px solid red;
-	writing-mode:tb-rl;
-	-webkit-transform:rotate(90deg);
-	-moz-transform:rotate(90deg);
-	-o-transform: rotate(90deg);
-	white-space:nowrap;
-	display:block;
-	bottom:0;
-	width:20px;
-	height:20px;
-	font-family: 'Trebuchet MS', Helvetica, sans-serif;
-	font-size:24px;
-	font-weight:normal;
-	text-shadow: 0px 0px 1px #333;
-}
-
-.bold {
-	font-weight: bold;
-}
-
-.float_left {
-	float: left;
-}
-
-.float_right {
-	float: right;
-}
-
-.overflow_hidden {
-	overflow: hidden;
-}
-
-.overflow_auto {
-	overflow: auto;
 }

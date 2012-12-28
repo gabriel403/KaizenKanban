@@ -31,7 +31,7 @@ define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string
 					// copyOnly:       false,
 					// define whether or not this source will accept drops from itself, based on the value passed into
 					// buildCatalog; defaults to true, since this is the default that dojo/dnd uses
-					// selfAccept:     true,
+					selfAccept:     true,
 					withHandles:    true,
 					creator:        lang.hitch(this, this.cardCreator),
 					singular:       true,
