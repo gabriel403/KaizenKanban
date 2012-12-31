@@ -1,0 +1,27 @@
+<div class="${baseClass}">
+	<div data-dojo-type="dijit/form/Form" id="newWorkflowForm" data-dojo-attach-point="newWorkflowForm" data-dojo-id="newWorkflowForm" encType="multipart/form-data" data-dojo-attach-event="onSubmit:newWorkflowValidation">
+		<div class="overflow_auto">
+			<label for"title">Workflow name: </label>
+			<input name="title" required="true" data-dojo-attach-point="workflowTitleIpt" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="placeHolder: 'Name your workflow'" type="text" />
+		</div>
+		<br />
+		<div class="overflow_auto">
+			<label for"description">Workflow description: </label>
+			<input name="description" required="true" data-dojo-attach-point="workflowDescIpt" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="placeHolder: 'Describe your workflow'" type="text" />
+		</div>
+		<br />
+		<div class="overflow_auto">
+			<label for"order">Place new workflow after:</label>
+			<input name="order" required="true" data-dojo-attach-point="workflowCmbBx" data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="searchAttr:'title'" />
+		</div>
+		<br />
+		<div data-dojo-attach-point="buttonbar" class="dijitDialogPaneActionBar">
+			<button data-dojo-type="dijit/form/Button" type="submit">
+				OK
+			</button>
+			<button data-dojo-type="dijit/form/Button" type="button" data-dojo-attach-event="onClick:cancel">
+				Cancel
+			</button>
+		</div>
+	</div>
+</div>

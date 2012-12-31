@@ -105,12 +105,20 @@ KanbanController.prototype.POST 			= function(options, payload) {
 		// var self 	= this;
 		data 		= jsonutil.parse(data);
 		KanbanUtil.payload.id = ++data.length;
-		console.log(data);
 		var pop = data.pop();
 		if ( pop != null)
 			data.push(pop);
 		data.push(KanbanUtil.payload);
-		console.log(data);
+
+		//loop through data and rearrange order based on order of payload, if there is one
+		if ( 'order' in KanbanUtil.payload ) {
+			for ( var i in data ) {
+				if ( 'order' in data[i] && data[i].order > KanbanUtil.payload.order ) {
+					data[i].order++;
+				}
+			}
+		}
+
 		data 		= jsonutil.stringify(data);
 		KanbanUtil.writeJsonFile(data, function(err){
 			// var self = this;
@@ -136,6 +144,22 @@ KanbanController.prototype.GET 				= function(options, payload) {
 	KanbanUtil.readJsonFile(function(err, data){
 		data = jsonutil.parse(data);
 		data = (KanbanUtil.queryVar == "id" ? jsonutil.jsonid(data, KanbanUtil.queryVar, KanbanUtil.queryVal) : jsonutil.jsonquery(data, KanbanUtil.queryVar, KanbanUtil.queryVal));
+				//loop through data and rearrange order based on order of payload, if there is one
+		if ( data.length > 0 && 'order' in data[0] ) {
+			console.log("ordering");
+			for ( var i in data ) {
+				for ( var x in data ) {
+					x = parseInt(x);
+					if ( data[x+1] && data[x].order > data[x+1].order ) {
+						console.log(x, (x+1), data[x], data[x+1]);
+						console.log(x+" > "+(x+1));
+						var tmp = data[x+1];
+						data[x+1] = data[x];
+						data[x] = tmp;
+					}
+				}
+			}
+		}
 		data = jsonutil.stringify(data);
 		self.emit('sendmessage', data);
 	});

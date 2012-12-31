@@ -5,6 +5,9 @@ define([ "dojo/_base/declare", "dojo/topic", "dijit/MenuBar", "dijit/MenuBarItem
 		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			baseClass       : "menuBar",
 			templateString  : template,
+			newWorkflowPublish	: function(){
+				topic.publish('/kk/newworkflow');
+			},
 			newStoryPublish	: function(){
 				topic.publish('/kk/newstory');
 			}

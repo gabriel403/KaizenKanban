@@ -1,5 +1,5 @@
 define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/FilteringSelect", "dijit/form/Button",
-	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/text!./newStory.html", 
+	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/text!./newWorkflow.html", 
 	"dijit/form/Form", "dojo/_base/event", "dojo/Evented", "dijit/registry" ],
 	function(declare, ValidationTextBox, FilteringSelect, Button,
 		_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
@@ -8,12 +8,11 @@ define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/Filte
 			baseClass			: "newItemWidget",
 			templateString		: template,
 
-			storyTitleIpt		: null,
-			storyDescIpt		: null,
-			workflowCmbBx		: null,
+			workflowTitleIpt	: null,
+			workflowDescIpt		: null,
 
 			store				: null,
-			newStoryForm		: null,
+			newWorkflowForm		: null,
 
 			setStore 			: function(store){
 				this.store = store;
@@ -22,17 +21,16 @@ define([ "dojo/_base/declare", "dijit/form/ValidationTextBox", "dijit/form/Filte
 
 			postCreate			: function(){
 				this.workflowCmbBx.store	= this.store;
-				// this.store  = this.parentView.mainModel.workflowStore;
 			},
-			newStoryValidation	: function(e) {
+			newWorkflowValidation	: function(e) {
 				///?storynameIpt=My+New+Story&storydescIpt=My+Story+Description&workflowCmbBx=Awaiting+Development
 				event.stop(e);
-				if(newStoryForm.validate()) {
+				if(newWorkflowForm.validate()) {
 					this.submit();
 				}
 			},
 			getFormObject 		: function(){
-				return this.newStoryForm.get('value');
+				return this.newWorkflowForm.get('value');
 			},
 			submit				: function(){
 				this.disableButtons();

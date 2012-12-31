@@ -21,7 +21,7 @@
 	width:100%;
 }
 
-.newStoryCardWidget .dijit {
+.newItemWidget .dijit {
 	float: right;
 }
 
@@ -31,7 +31,7 @@
 }
 
 
-.newStoryCardWidget label {
+.newItemWidget label {
 	float: left;
 }
 

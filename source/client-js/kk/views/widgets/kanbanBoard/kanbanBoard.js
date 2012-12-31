@@ -137,6 +137,7 @@ define(["dojo/_base/declare", "dojo/query", "dojo/dom-style", "dojo/aspect", "do
 				this.addOnetimeListeners();
 				var outernode = this.columnNodes;
 				this.workflowstepsStore.query().then(lang.hitch(this, this.processWorkflows));
+				// this.workflowstepsStore.query(null, {"sort": [{"attribute": "order"}]}).then(lang.hitch(this, this.processWorkflows));
 			},
 			processWorkflows: function(workflows) {
 				array.forEach(workflows, 

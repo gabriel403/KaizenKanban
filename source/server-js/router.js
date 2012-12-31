@@ -4,19 +4,14 @@ sl 						= require('./serviceLocator.js'),
 domain 					= require('domain'),
 events 					= require('events');
 
-// var Response = function(){}
+var prepRe = (function () {
+    var specials = '/ + ? | ( ) [ ] { } \\ ^ ? ! = : $'.split(' ').join('|\\');
+    var re = new(RegExp)('(\\' + specials + ')', 'g');
 
-// Response.prototype.prepare = function(url, pagedata){
-// 	this.pagedata = pagedata;
-// 	sl.get('url').parse(url, true)
-// 	var path     					= self.specialCaseCheck(self.parsedUrl.pathname);
-// 	this.headdata['Content-Type'] 	= sl.get('transferTypes').getContentType(sl.get('transferTypes').getExt(path));
-// 	this.encoding 				= sl.get('transferTypes').getContentEncoding(sl.get('transferTypes').getExt(path));
-
-// 	return {'httpcode': httpcode};
-// }
-
-
+    return function (str) {
+        return (typeof(str) === 'string') ? "^"+str.replace(re, '\\$1').replace("*", "(\\w*)")+"$" : str;
+    };
+})();
 
 var Router 				= function(){
 	var self 			= this;
@@ -31,25 +26,9 @@ var Router 				= function(){
 	this.route			= "";
 
 	events.EventEmitter.call(self);
-	self.on('sendmessage', 	self.messageHandler);
 };
 
 util.inherits(Router, events.EventEmitter);
-
-var prepRe = (function () {
-    var specials = '/ + ? | ( ) [ ] { } \\ ^ ? ! = : $'.split(' ').join('|\\');
-    var re = new(RegExp)('(\\' + specials + ')', 'g');
-
-    return function (str) {
-        return (typeof(str) === 'string') ? "^"+str.replace(re, '\\$1').replace("*", "(\\w*)")+"$" : str;
-    };
-})();
-
-Router.prototype.messageHandler = function(message){
-	var self 		= this;
-	self.pagedata	= message;
-	self.sendMessage(null, self.getReponseObject());
-}
 
 Router.prototype.map 			= {
 	'default'		: {'callback': 'default', 	'type': 'normal', 	'location': 'self', 			'options': {}},
@@ -76,17 +55,13 @@ Router.prototype.rest 				= function(request, requestdata){
 
 	self.headdata['Content-Type'] 	= sl.get('transferTypes').getContentType(self.route.type);
 
-	obj.on('sendmessage', 	function(message){
-		self.pagedata	= message;
-		self.sendMessage(null, self.getReponseObject());
-	});
+	obj.on('sendmessage', function(data){self.emit('sendmessage', data);});
 
 	if ( request.method in obj ) {
 		sl.get('logger').info("calling on object", {method: request.method});
 		obj[request.method](self.parsedUrl, requestdata);
 	} else {
 		// pattern = escapeRe(pattern)
-
 		sl.get('logger').error("error no method in object", {method: request.method, object: self.route.location});
 		throw new Error("No method in object").code = 404;
 	}
@@ -129,21 +104,21 @@ Router.prototype.handle 			= function(request, requestdata){
 
 			// regexp match
 			if ( null != regex ) {
-				// console.log("matched to", i);
 				routeselection = i;
 			}
 
 			// regex with id match
 			if ( null != regex && regex.length > 1 && regex[1].length > 0 ) {
 				self.parsedUrl.query.id = regex[1];
-				// console.log("id found", regex[1]);
 			}
 		}
 	}
 	
 	self.route = self.map[routeselection];
+
 	sl.get('kkmixin').hardMixin(self.parsedUrl.query, self.route.options);
 	sl.get('logger').info(routeselection+" route");
+
 	self[self.route.callback](request, requestdata);
 }
 
@@ -153,24 +128,18 @@ Router.prototype.getReponseObject 	= function(){
 }
 
 var route 				= function(request, requestdata, callback) {
-	// console.log(requestdata);
 	var router 			= new Router();
-	router.sendMessage 	= callback;
 
 	var d 				= domain.create();
 	d.on('error', 		function(err) {
 		sl.get('logger').error("domain error", util.inspect(err));
 		callback(err);
 	});
-	// d.on('sendmessage',	function(message){
-	// 	sl.get('logger').info("received sendmessage", {message: message});
-	// 	router.pagedata	= message;
-	// 	callback(null, router.getReponseObject());
-	// });
+	router.on('sendmessage',	function(message){
+		router.pagedata	= message;
+		callback(null, router.getReponseObject());
+	});
 	d.run(function(){router.handle(request, requestdata);});
-
-	
 }
 
 exports.route 				= route;
-// exports.setupConnections 	= Router.setupConnections;

@@ -1,7 +1,1 @@
-[
-	{"title": "Backlog",                "id": "bcklog",	"initialstate": "minimisedSource"},
-	{"title": "RFC",                    "id": "rfc",	"initialstate": "openedSource"},
-    {"title": "Awaiting Development",   "id": "awdev",	"initialstate": "openedSource"},
-    {"title": "In Development",         "id": "indev",	"initialstate": "openedSource"},
-    {"title": "Completed",              "id": "cmpltd",	"initialstate": "minimisedSource"}
-]
+[{"title":"Backlog","id":1,"initialstate":"minimisedSource","order":1},{"title":"RFC","id":2,"initialstate":"openedSource","order":2},{"title":"Awaiting Development","id":3,"initialstate":"openedSource","order":3},{"title":"In Development","id":4,"initialstate":"openedSource","order":4},{"title":"Completed","id":5,"initialstate":"minimisedSource","order":6},{"title":"Awaiting Test","description":"Stories waiting for testing","order":"4","initialstate":"openedSource","id":6}]
