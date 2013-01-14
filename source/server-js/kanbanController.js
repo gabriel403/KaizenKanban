@@ -3,7 +3,10 @@ fs 				= require('fs'),
 util 			= require('util'),
 events 			= require('events');
 
-var KanbanUtil = {
+var KanbanUtil = function(){
+	this.file 			= __dirname + '/stories.json';
+	this.queryVal 		= null;
+	this.queryVar 		= 'workflow';
 }
 
 KanbanUtil.default 			= function() {
@@ -12,9 +15,9 @@ KanbanUtil.default 			= function() {
 	this.queryVar 		= 'workflow';
 }
 
-KanbanUtil.prepareData		= function(options) {
+KanbanUtil.prototype.prepareData		= function(options) {
 	var self = this;
-	self.default();
+	// self.default();
 
 	if ( 'type' in options.query ) {
 		self.file = __dirname + '/'+options.query.type+'.json'
@@ -31,7 +34,7 @@ KanbanUtil.prepareData		= function(options) {
 	}
 }
 
-KanbanUtil.readJsonFile 	= function(callback) {
+KanbanUtil.prototype.readJsonFile 	= function(callback) {
 	var self = this;
 	fs.readFile(self.file, 'utf8', function(err, data) {
 		if (err) throw err;
@@ -41,7 +44,7 @@ KanbanUtil.readJsonFile 	= function(callback) {
    	});
 }
 
-KanbanUtil.writeJsonFile 	= function(data, callback) {
+KanbanUtil.prototype.writeJsonFile 	= function(data, callback) {
 	var self = this;
 	fs.writeFile(self.file, data, 'utf8', function (err) {
 		if (err) throw err;
@@ -65,21 +68,21 @@ KanbanController.prototype.PUT 				= function(options, payload) {
 	}
 
 	var jsonutil 	= sl.get('jsonutil');
-
+	var kbu = new (KanbanUtil)();
 	var self 		= this;
-	KanbanUtil.payload 	= payload;
-	KanbanUtil.prepareData(options);
+	kbu.payload 	= payload;
+	kbu.prepareData(options);
 
-	console.log(KanbanUtil.payload);
+	console.log(kbu.payload);
 
-	KanbanUtil.readJsonFile(function(err, data){
+	kbu.readJsonFile(function(err, data){
 		// var self 	= this;
-		console.log(KanbanUtil.payload);
+		console.log(kbu.payload);
 		data 		= jsonutil.parse(data);
-		var dataI 	= jsonutil.jsonindex(data, KanbanUtil.queryVar, KanbanUtil.queryVal);
-		data[dataI] = jsonutil.parse(KanbanUtil.payload);
+		var dataI 	= jsonutil.jsonindex(data, kbu.queryVar, kbu.queryVal);
+		data[dataI] = jsonutil.parse(kbu.payload);
 		data 		= jsonutil.stringify(data);
-		KanbanUtil.writeJsonFile(data, function(err){
+		kbu.writeJsonFile(data, function(err){
 			// var self = this;
 			self.emit('sendmessage', data);
 		});
@@ -97,32 +100,33 @@ KanbanController.prototype.POST 			= function(options, payload) {
 
 	var jsonutil 	= sl.get('jsonutil');
 
+	var kbu = new (KanbanUtil)();
 	var self 		= this;
-	KanbanUtil.payload 	= jsonutil.parse(payload);
-	KanbanUtil.prepareData(options);
+	kbu.payload 	= jsonutil.parse(payload);
+	kbu.prepareData(options);
 
-	KanbanUtil.readJsonFile(function(err, data){
+	kbu.readJsonFile(function(err, data){
 		// var self 	= this;
 		data 		= jsonutil.parse(data);
-		KanbanUtil.payload.id = ++data.length;
+		kbu.payload.id = ++data.length;
 		var pop = data.pop();
 		if ( pop != null)
 			data.push(pop);
-		data.push(KanbanUtil.payload);
+		data.push(kbu.payload);
 
 		//loop through data and rearrange order based on order of payload, if there is one
-		if ( 'order' in KanbanUtil.payload ) {
+		if ( 'order' in kbu.payload ) {
 			for ( var i in data ) {
-				if ( 'order' in data[i] && data[i].order > KanbanUtil.payload.order ) {
+				if ( 'order' in data[i] && data[i].order > kbu.payload.order ) {
 					data[i].order++;
 				}
 			}
 		}
 
 		data 		= jsonutil.stringify(data);
-		KanbanUtil.writeJsonFile(data, function(err){
+		kbu.writeJsonFile(data, function(err){
 			// var self = this;
-			self.emit('sendmessage', jsonutil.stringify(KanbanUtil.payload));
+			self.emit('sendmessage', jsonutil.stringify(kbu.payload));
 		});
 	});
 }
@@ -136,14 +140,16 @@ KanbanController.prototype.DELETE 			= function(options, payload) {
 KanbanController.prototype.GET 				= function(options, payload) {
 	var jsonutil 	= sl.get('jsonutil');
 
+	var kbu = new (KanbanUtil)();
+	
 	var self = this;
 	sl.get('logger').info("GET got called", util.inspect(options));
 
-	KanbanUtil.prepareData(options);
+	kbu.prepareData(options);
 
-	KanbanUtil.readJsonFile(function(err, data){
+	kbu.readJsonFile(function(err, data){
 		data = jsonutil.parse(data);
-		data = (KanbanUtil.queryVar == "id" ? jsonutil.jsonid(data, KanbanUtil.queryVar, KanbanUtil.queryVal) : jsonutil.jsonquery(data, KanbanUtil.queryVar, KanbanUtil.queryVal));
+		data = (kbu.queryVar == "id" ? jsonutil.jsonid(data, kbu.queryVar, kbu.queryVal) : jsonutil.jsonquery(data, kbu.queryVar, kbu.queryVal));
 				//loop through data and rearrange order based on order of payload, if there is one
 		if ( data.length > 0 && 'order' in data[0] ) {
 			console.log("ordering");
