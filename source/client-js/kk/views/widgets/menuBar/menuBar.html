@@ -7,13 +7,23 @@
 		data-dojo-props="disabled:true">
 			Sprint
 		</div>
-		<div data-dojo-type="dijit/MenuBarItem" class="float_right" 
-		data-dojo-attach-event="onClick:newWorkflowPublish">
-			New Workflow
+
+    	<div data-dojo-type="dijit/PopupMenuBarItem" class="float_right">
+        	<span>Workflow</span>
+			<div data-dojo-type="dijit/DropDownMenu">
+				<div data-dojo-type="dijit/MenuBarItem" data-dojo-attach-event="onClick:newWorkflowPublish">
+					New
+				</div>
+			</div>
 		</div>
-		<div data-dojo-type="dijit/MenuBarItem" class="float_right" 
-		data-dojo-attach-event="onClick:newStoryPublish">
-			New Story
+
+    	<div data-dojo-type="dijit/PopupMenuBarItem" class="float_right">
+        	<span>Story</span>
+			<div data-dojo-type="dijit/DropDownMenu">
+				<div data-dojo-type="dijit/MenuBarItem" data-dojo-attach-event="onClick:newStoryPublish">
+					New
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

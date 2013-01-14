@@ -1,0 +1,2 @@
+//>>built
+define("dojo/nls/dojo_fi-fi",{"dijit/nls/loading":{loadingState:"Lataus on meneill\u00e4\u00e4n...",errorState:"On ilmennyt virhe."},"dijit/nls/common":{buttonOk:"OK",buttonCancel:"Peruuta",buttonSave:"Tallenna",itemClose:"Sulje"},"dijit/form/nls/validate":{invalidMessage:"Annettu arvo ei kelpaa.",missingMessage:"T\u00e4m\u00e4 arvo on pakollinen.",rangeMessage:"T\u00e4m\u00e4 arvo on sallitun alueen ulkopuolella."},"dijit/form/nls/ComboBox":{previousMessage:"Edelliset valinnat",nextMessage:"Lis\u00e4\u00e4 valintoja"}});

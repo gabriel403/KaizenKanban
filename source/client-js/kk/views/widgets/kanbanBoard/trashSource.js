@@ -1,12 +1,12 @@
 define(["dojo/_base/declare", "dojo/dnd/Source", "dojo/_base/lang", "dojo/string", "dojo/dom-construct", "dojo/query",
 	"dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin", "dojo/dom-class", "dojo/dom",
 	"dojo/dom-style", "dojo/dom-geometry", "dojo/_base/event",
-	"dojo/text!./trashSource.html", "dijit/Dialog", "dojo/query", "dojo/dnd/Moveable", "dojo/text!./kanbanCard.html",
+	"dojo/text!./trashSource.html", "dijit/Dialog", "dojo/dnd/Moveable", "dojo/text!./kanbanCard.html",
 	"dijit/DialogUnderlay", "dojo/_base/window" ],
 	function(declare, Source, lang, stringUtil, domConstruct, query,
 	 _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, domClass, dom, 
 	 domStyle, domGeom, Event,
-	 trashSourceTemplate, Dialog, query, Moveable, kbCard,
+	 trashSourceTemplate, Dialog, Moveable, kbCard,
 	 DialogUnderlay, win){
 		return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 			templateString  : trashSourceTemplate,

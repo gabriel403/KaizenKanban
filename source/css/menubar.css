@@ -2,7 +2,6 @@
 	/*width: 100%;*/
 	background-color: black;
 	color: white;
-	/*font-size: 1.2em;*/
 }
 
 .menubar .dijitMenuItem {
@@ -12,4 +11,16 @@
 .menubar .dijitMenuItemHover, .menubar .dijitMenuItemSelected {
 	background-color: white;
 	color: black;
+}
+
+.dijitMenuBar {
+	font-size: 1.2em;
+}
+
+.dijitMenuPopup {
+	font-size: 1.2em;
+}
+
+.dijitMenuItemLabel {
+	padding: 5px;
 }

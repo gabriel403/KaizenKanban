@@ -1,0 +1,2 @@
+//>>built
+define("dojo/nls/dojo_pt-br",{"dijit/nls/loading":{loadingState:"Carregando...",errorState:"Desculpe, ocorreu um erro"},"dijit/nls/common":{buttonOk:"OK",buttonCancel:"Cancelar",buttonSave:"Salvar",itemClose:"Fechar"},"dijit/form/nls/validate":{invalidMessage:"O valor inserido n\u00e3o \u00e9 v\u00e1lido.",missingMessage:"Este valor \u00e9 necess\u00e1rio.",rangeMessage:"Este valor est\u00e1 fora do intervalo. "},"dijit/form/nls/ComboBox":{previousMessage:"Op\u00e7\u00f5es anteriores",nextMessage:"Mais op\u00e7\u00f5es"}});

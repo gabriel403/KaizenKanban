@@ -1,7 +1,7 @@
-@import '../client-js/dijit/themes/nihilo/nihilo.css';
-@import '../client-js/dojo/resources/dojo.css';
+@import '../css/dojo/nihilo.css';
+@import '../css/dojo/dojo.css';
+@import '../css/dojo/dnd.css';
 @import '../css/reset.css';
-@import '../client-js/dojo/resources/dnd.css';
 @import '../css/dnd.css';
 @import '../css/general.css';
 @import '../css/menubar.css';

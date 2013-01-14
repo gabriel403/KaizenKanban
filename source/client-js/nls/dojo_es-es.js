@@ -1,0 +1,2 @@
+//>>built
+define("dojo/nls/dojo_es-es",{"dijit/nls/loading":{loadingState:"Cargando...",errorState:"Lo siento, se ha producido un error"},"dijit/nls/common":{buttonOk:"Aceptar",buttonCancel:"Cancelar",buttonSave:"Guardar",itemClose:"Cerrar"},"dijit/form/nls/validate":{invalidMessage:"El valor especificado no es v\u00e1lido.",missingMessage:"Este valor es necesario.",rangeMessage:"Este valor est\u00e1 fuera del intervalo."},"dijit/form/nls/ComboBox":{previousMessage:"Opciones anteriores",nextMessage:"M\u00e1s opciones"}});
