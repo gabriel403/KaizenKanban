@@ -1,3 +1,0 @@
-//>>built
-define("dojo/nls/dojo_ca",{"dijit/nls/loading":{loadingState:"S'est\u00e0 carregant...",errorState:"Ens sap greu. S'ha produ\u00eft un error."},"dijit/nls/common":{buttonOk:"D'acord",buttonCancel:"Cancel\u00b7la",buttonSave:"Desa",itemClose:"Tanca"},"dijit/form/nls/validate":{invalidMessage:"El valor introdu\u00eft no \u00e9s v\u00e0lid",missingMessage:"Aquest valor \u00e9s necessari",rangeMessage:"Aquest valor \u00e9s fora de l'interval"},"dijit/form/nls/ComboBox":{previousMessage:"Opcions anteriors",
-nextMessage:"M\u00e9s opcions"}});

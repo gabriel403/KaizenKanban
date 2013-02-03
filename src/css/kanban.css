@@ -1,0 +1,12 @@
+.zoom_icon {
+	width: 24px;
+	height: 24px;
+	background-image: url('/images/monotone_search_zoom_small.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	cursor:pointer;
+}
+
+#detailsDialog {
+	min-width: 200px;
+}

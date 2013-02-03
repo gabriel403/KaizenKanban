@@ -1,2 +1,0 @@
-//>>built
-define("dojo/nls/dojo_nl-nl",{"dijit/nls/loading":{loadingState:"Bezig met laden...",errorState:"Er is een fout opgetreden"},"dijit/nls/common":{buttonOk:"OK",buttonCancel:"Annuleren",buttonSave:"Opslaan",itemClose:"Sluiten"},"dijit/form/nls/validate":{invalidMessage:"De opgegeven waarde is ongeldig.",missingMessage:"Deze waarde is verplicht.",rangeMessage:"Deze waarde is niet toegestaan."},"dijit/form/nls/ComboBox":{previousMessage:"Eerdere opties",nextMessage:"Meer opties"}});

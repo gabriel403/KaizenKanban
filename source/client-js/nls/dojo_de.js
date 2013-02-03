@@ -1,3 +1,0 @@
-//>>built
-define("dojo/nls/dojo_de",{"dijit/nls/loading":{loadingState:"Wird geladen...",errorState:"Es ist ein Fehler aufgetreten."},"dijit/nls/common":{buttonOk:"OK",buttonCancel:"Abbrechen",buttonSave:"Speichern",itemClose:"Schlie\u00dfen"},"dijit/form/nls/validate":{invalidMessage:"Der eingegebene Wert ist ung\u00fcltig. ",missingMessage:"Dieser Wert ist erforderlich.",rangeMessage:"Dieser Wert liegt au\u00dferhalb des g\u00fcltigen Bereichs. "},"dijit/form/nls/ComboBox":{previousMessage:"Vorherige Auswahl",
-nextMessage:"Weitere Auswahlm\u00f6glichkeiten"}});

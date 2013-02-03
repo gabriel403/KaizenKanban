@@ -1,0 +1,22 @@
+{
+    "name"          : "kaizen-kanban",
+    "version"       : "0.0.1",
+    "main"          : "main",
+    "dependencies"  : {
+        "dojo"  : "1.8.3",
+        "dojox" : "1.8.3",
+        "dijit" : "1.8.3"
+    },
+    "author"        : "Gabriel Baker <gabriel@autonomicpilot.co.uk>",
+    "description"   : "A simple kanban board written in node.js and dojo",  
+    "licenses"      : [
+        {
+            "type"  : "BSD",
+            "url"   : "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+        }
+    ],
+    "bugs"      : "https://github.com/gabriel403/KaizenKanban/issues",
+    "keywords"  : ["JavaScript", "Dojo", "Kanban", "NodeJS"],
+    "homepage"  : "https://github.com/gabriel403/KaizenKanban",
+    "dojoBuild" : "package.js"
+}

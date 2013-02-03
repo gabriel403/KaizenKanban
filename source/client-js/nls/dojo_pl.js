@@ -1,3 +1,0 @@
-//>>built
-define("dojo/nls/dojo_pl",{"dijit/nls/loading":{loadingState:"\u0141adowanie...",errorState:"Niestety, wyst\u0105pi\u0142 b\u0142\u0105d"},"dijit/nls/common":{buttonOk:"OK",buttonCancel:"Anuluj",buttonSave:"Zapisz",itemClose:"Zamknij"},"dijit/form/nls/validate":{invalidMessage:"Wprowadzona warto\u015b\u0107 jest nieprawid\u0142owa.",missingMessage:"Ta warto\u015b\u0107 jest wymagana.",rangeMessage:"Ta warto\u015b\u0107 jest spoza zakresu."},"dijit/form/nls/ComboBox":{previousMessage:"Poprzednie wybory",
-nextMessage:"Wi\u0119cej wybor\u00f3w"}});

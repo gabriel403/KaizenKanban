@@ -1,2 +1,0 @@
-//>>built
-define("dojo/nls/dojo_sl",{"dijit/nls/loading":{loadingState:"Nalaganje ...",errorState:"Oprostite, pri\u0161lo je do napake."},"dijit/nls/common":{buttonOk:"V redu",buttonCancel:"Prekli\u010di",buttonSave:"Shrani",itemClose:"Zapri"},"dijit/form/nls/validate":{invalidMessage:"Vnesena vrednost ni veljavna.",missingMessage:"Ta vrednost je zahtevana.",rangeMessage:"Ta vrednost je izven obmo\u010dja."},"dijit/form/nls/ComboBox":{previousMessage:"Prej\u0161nje izbire",nextMessage:"Dodatne izbire"}});

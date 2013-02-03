@@ -1,3 +1,0 @@
-//>>built
-define("dojo/nls/dojo_sk",{"dijit/nls/loading":{loadingState:"Zav\u00e1dza sa...",errorState:"\u013dutujeme, ale vyskytla sa chyba"},"dijit/nls/common":{buttonOk:"OK",buttonCancel:"Zru\u0161i\u0165",buttonSave:"Ulo\u017ei\u0165",itemClose:"Zatvori\u0165"},"dijit/form/nls/validate":{invalidMessage:"Zadan\u00e1 hodnota nie je platn\u00e1.",missingMessage:"T\u00e1to hodnota je povinn\u00e1.",rangeMessage:"T\u00e1to hodnota je mimo rozsah."},"dijit/form/nls/ComboBox":{previousMessage:"Predch\u00e1dzaj\u00face mo\u017enosti",
-nextMessage:"Viac mo\u017enost\u00ed"}});
