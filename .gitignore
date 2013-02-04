@@ -1,3 +1,7 @@
 node_modules/*
 src/client-js/dtk/
 src/client-js/deploy/
+src/client-js/dijit/
+src/client-js/dojo/
+src/client-js/dojox/
+src/client-js/util/
