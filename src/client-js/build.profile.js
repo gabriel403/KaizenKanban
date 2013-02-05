@@ -16,13 +16,13 @@ var profile = {
     packages:[
         {
             name:"dojo",
-            location:"./dtk/dojo"
+            location:"./dojo"
         },{
             name:"dijit",
-            location:"./dtk/dijit"
+            location:"./dijit"
         },{
             name:"dojox",
-            location:"./dtk/dojox"
+            location:"./dojox"
         },{
             name:"kk",
             location:"./kk"

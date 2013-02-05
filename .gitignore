@@ -1,5 +1,7 @@
+!.gitkeep
+build-report.txt
 node_modules/*
-src/client-js/dtk/
+src/client-js/dtk/*
 src/client-js/deploy/
 src/client-js/dijit/
 src/client-js/dojo/
