@@ -6,7 +6,7 @@
     "description"   : "A simple kanban board written in node js and dojo",
     "engines"       : { 
         "node"  : "0.8.x", 
-        "npm"   : "1.2.x" 
+        "npm"   : "1.x" 
     },
     "dependencies"  : {
         "winston"   : "x"
