@@ -40,8 +40,13 @@ mv ${DEPLOYDIR}/* .
 rm -rf ${DEPLOYDIR}
 
 # deploy
-#git commit -am "deploying"
-#git push -u ${DEPLOYDEST} ${DEPLOYBRANCH}
+cd src/client-js
+#git add -f dojo
+#git add -f dojox
+#git add -f dijit
+#git commit -am "build"
+#git push --force -u heroku master
+#git reset --hard HEAD~1
 
 # destroy built files
 #rm -rf $SRCSTR
@@ -49,7 +54,5 @@ rm -rf ${DEPLOYDIR}
 # restore backup
 #mv ${SRCBCK}/* .
 
-# remove defunct commit
-#git reset --hard HEAD~1
 
 set +x
